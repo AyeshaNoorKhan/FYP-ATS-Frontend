@@ -13,6 +13,7 @@ function NavBar(props) {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
+                <Nav.Link><Link to="/home" style={{textDecoration:"none",color:"gray"}}>Home</Link></Nav.Link>
                 <Nav.Link><Link to="/jobdetails" style={{textDecoration:"none",color:"gray"}}>Job Details</Link></Nav.Link>
                 <Nav.Link ><Link to="/aptitudequestion" style={{textDecoration:"none",color:"gray"}}>Aptitude Test</Link></Nav.Link>
                 <NavDropdown title="Candidate" id="collasible-nav-dropdown">

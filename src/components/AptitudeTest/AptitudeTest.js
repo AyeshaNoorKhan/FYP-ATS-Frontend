@@ -26,6 +26,7 @@ function AptitudeTest(props) {
             <Button style={{backgroundColor:"rgb(0, 51, 153)",color:"white"}} onClick={()=>setShow(true)}>
                 Add New Aptitude Question
             </Button>
+            <p></p>
             <GridTable
           columns={getColumns({ setRowsData })}
         //   rows={rowsData}

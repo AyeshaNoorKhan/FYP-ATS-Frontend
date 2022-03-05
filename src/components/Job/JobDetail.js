@@ -26,6 +26,7 @@ function JobDetail(props) {
                 Add New Job
             </Button>
         </Link>
+        <p></p>
         <GridTable
           columns={getColumns({ setRowsData })}
         //   rows={rowsData}
