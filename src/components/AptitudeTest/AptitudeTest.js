@@ -1,10 +1,16 @@
 import React,{useState} from 'react';
-import MaterialTable from 'material-table';
+// import MaterialTable from 'material-table';
+import GridTable from "@nadavshaar/react-grid-table";
+import getColumns from "./getColumns.js";
 import {Button,Modal,Form,Row,Col} from 'react-bootstrap';
-import {Link} from "react-router-dom";
+// import {Link} from "react-router-dom";
+import '../../stylesheet/JobDetail.css';
 
 function AptitudeTest(props) {
     const[show,setShow]=useState(false);
+    const [rowsData, setRowsData] = useState([]);
+    const [isLoading, setLoading] = useState(false);
+
     var columns = [
         {title: "Aptitude Test ID", field: "job_id", hidden: true},
         {title: "Selected Category", field: "Jtitle"},
@@ -15,17 +21,25 @@ function AptitudeTest(props) {
         {title: "Answer", field: "ASeats"}
         ]
     return (
-        <div>
+        <div className="jobdetail">
 
             <Button style={{backgroundColor:"rgb(0, 51, 153)",color:"white"}} onClick={()=>setShow(true)}>
                 Add New Aptitude Question
             </Button>
-            <MaterialTable
+            <GridTable
+          columns={getColumns({ setRowsData })}
+        //   rows={rowsData}
+        //   isLoading={isLoading}
+          onRowClick={({ rowIndex, data, column, isEdit, event }, tableManager) =>
+            !isEdit &&
+            tableManager.rowSelectionApi.getIsRowSelectable(data.id) &&
+            tableManager.rowSelectionApi.toggleRowSelection(data.id)
+          }
+        />
+            {/* <MaterialTable
                 title="Aptitude Test Questions"
                 columns={columns}
-                // icons={tableIcons}
-                // data={data}
-            />
+            /> */}
             {show==true?
              <Modal show={show}>
              <Modal.Header >

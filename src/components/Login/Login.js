@@ -10,12 +10,12 @@ function Login(props) {
                 <Card.Header as="h6" style={{backgroundColor:"rgb(0, 51, 153)",color:"white"}}>Admin Login</Card.Header>
                 <Card.Body style={{backgroundColor:"rgb(204, 204, 204)",color:"white"}}>
                 <Form style={{fontSize:"small",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                        <Form.Group  controlId="formBasicEmail">
+                        <Form.Group style={{width:"90%"}} controlId="formBasicEmail">
                             <Form.Label style={{color:"gray",fontWeight:"bold"}}>Username</Form.Label>
-                            <Form.Control type="text" placeholder="Enter username" />
+                            <Form.Control  type="text" placeholder="Enter username" />
                         </Form.Group>
 
-                        <Form.Group  controlId="formBasicPassword">
+                        <Form.Group style={{width:"90%"}} controlId="formBasicPassword">
                             <Form.Label style={{color:"gray",fontWeight:"bold"}}>Password</Form.Label>
                             <Form.Control type="password" placeholder="Password" />
                         </Form.Group>

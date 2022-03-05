@@ -9,7 +9,7 @@ function NavBar(props) {
         <div>
             <Navbar collapseOnSelect expand="lg" fixed="top" style={{backgroundColor:"white"}}>
             <Container>
-            <Navbar.Brand href="#"> <img src={Euronetlogo}  alt="Euronetlogo" /></Navbar.Brand>
+            <Link to="/" style={{textDecoration:"none",color:"gray"}}><Navbar.Brand href="#"> <img src={Euronetlogo}  alt="Euronetlogo" /></Navbar.Brand></Link>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
@@ -24,7 +24,7 @@ function NavBar(props) {
                 <Nav.Link href="#pricing">Final Shortlisted Candidates</Nav.Link>
                 </Nav>
                 <Nav>
-                <Nav.Link href="#deets">Logout</Nav.Link>
+                <Nav.Link href="#deets"><Link to="/" style={{textDecoration:"none",color:"gray"}}>Logout</Link></Nav.Link>
                 </Nav>
             </Navbar.Collapse>
             </Container>

@@ -1,12 +1,14 @@
 import React,{useState} from 'react';
-import MaterialTable from 'material-table';
+import GridTable from "@nadavshaar/react-grid-table";
+import getColumns from "./getColumns.js";
 import {Button,Modal,Form,Row,Col} from 'react-bootstrap';
 import {Link} from "react-router-dom";
-import AddJobModal from './AddJobModal';
-
+import '../../stylesheet/JobDetail.css';
 
 function JobDetail(props) {
     const[show,setShow]=useState(false);
+    const [rowsData, setRowsData] = useState([]);
+    const [isLoading, setLoading] = useState(false);
     var columns = [
         {title: "Job ID", field: "job_id", hidden: true},
         {title: "Job Title", field: "Jtitle"},
@@ -17,19 +19,29 @@ function JobDetail(props) {
         {title: "Available Seats", field: "ASeats"}
         ]
     return (
-        <div>
+        <div className="jobdetail">
 
         <Link to="/jobdetails/addnewjob" style={{textDecoration:"none",color:"gray"}}>
             <Button style={{backgroundColor:"rgb(0, 51, 153)",color:"white"}} onClick={()=>setShow(true)}>
                 Add New Job
             </Button>
         </Link>
-            <MaterialTable
+        <GridTable
+          columns={getColumns({ setRowsData })}
+        //   rows={rowsData}
+        //   isLoading={isLoading}
+          onRowClick={({ rowIndex, data, column, isEdit, event }, tableManager) =>
+            !isEdit &&
+            tableManager.rowSelectionApi.getIsRowSelectable(data.id) &&
+            tableManager.rowSelectionApi.toggleRowSelection(data.id)
+          }
+        />
+            {/* <MaterialTable
                 title="Job Details"
                 columns={columns}
                 // icons={tableIcons}
                 // data={data}
-            />
+            /> */}
             {show==true?
              <Modal show={show}>
              <Modal.Header >
