@@ -21,8 +21,9 @@ function NavBar(props) {
                 <NavDropdown.Item href="#action/3.2">Candidate Resume</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Candidate Test</NavDropdown.Item>
                 </NavDropdown>
-                <Nav.Link href="#pricing">Shortlisted Resume</Nav.Link>
-                <Nav.Link href="#pricing">Final Shortlisted Candidates</Nav.Link>
+                <Nav.Link ><Link to="/shortlistedresume" style={{textDecoration:"none",color:"gray"}}>Shortlisted Resume</Link></Nav.Link>
+                <Nav.Link ><Link to="/finalshortlistedcandidates" style={{textDecoration:"none",color:"gray"}}>Final Shortlisted Candidates</Link></Nav.Link>
+                
                 </Nav>
                 <Nav>
                 <Nav.Link href="#deets"><Link to="/" style={{textDecoration:"none",color:"gray"}}>Logout</Link></Nav.Link>

@@ -107,99 +107,44 @@ const getColumns = ({ setRowsData }) => {
     },
     {
       id: "2",
-      field: "refmno",
-      label: "Referance No.",
+      field: "apttestid",
+      label: "Aptitude Test ID",
     },
     {
       id: "3",
-      field: "name",
-      label: "Name"
+      field: "apttestcategory",
+      label: "Test Category"
     },
     {
       id: "4",
-      field: "surname",
-      label: "Surname"
+      field: "apttestquestion",
+      label: "Question"
     },
     {
       id: "5",
-      field: "email",
-      label: "Email"
+      field: "optiona",
+      label: "Option A"
     },
     {
       id: "6",
-      field: "phone",
-      label: "Phone No."
+      field: "optionb",
+      label: "Option B"
     },
     {
       id: "7",
-      field: "address",
-      label: "Address"
+      field: "optionc",
+      label: "Option C"
     },
     {
       id: "8",
-      field: "postcode",
-      label: "Postcode"
+      field: "optiond",
+      label: "Option D"
     },
     {
       id: "9",
-      field: "state",
-      label: "State"
+      field: "apttestanswer",
+      label: "Correct Answer"
     },
-    {
-      id: "10",
-      field: "country",
-      label: "Country"
-    },
-    {
-      id: "11",
-      field: "bankaccinfo",
-      label: "Bank Account"
-    },
-    {
-      id: "12",
-      field: "memberno",
-      label: "Member No"
-    },
-    {
-      id: "13",
-      field: "payAud",
-      label: "Investment (AUD)"
-    },
-    {
-      id: "14",
-      field: "category",
-      label: "Role"
-    },
-    {
-      id: "15",
-      field: "prefCurrency",
-      label: "Prefered Currency"
-    },
-    // {
-    //   id: "6",
-    //   field: "gender",
-    //   label: "Gender",
-    //   editorCellRenderer: ({
-    //     tableManager,
-    //     value,
-    //     data,
-    //     column,
-    //     colIndex,
-    //     rowIndex,
-    //     onChange
-    //   }) => (
-    //     <select
-    //       style={styles.select}
-    //       value={value}
-    //       onChange={(e) =>
-    //         onChange({ ...data, [column.field]: e.target.value })
-    //       }
-    //     >
-    //       <option>Male</option>
-    //       <option>Female</option>
-    //     </select>
-    //   )
-    // },
     {
       id: "buttons",
       width: "max-content",
@@ -260,8 +205,8 @@ const getColumns = ({ setRowsData }) => {
               rowsClone[updatedRowIndex] = data;
               setRowsData(rowsClone);
               const postData= ()=>{
-                const {_id,id,refmno,name,surname,email,phone,address,postcode,state,country,bankaccinfo,memberno,password,payAud,category,date,prefCurrency}=data;
-                var UpdatedMemInfo ={_id,id, refmno,name,surname,email,phone,address,postcode,state,country,bankaccinfo,memberno,password,payAud,category,date,prefCurrency};
+                const {_id,id,apttestid,apttestcategory,apttestquestion,optiona,optionb,optionc,optiond,apttestanswer}=data;
+                var UpdatedMemInfo ={_id,id, apttestid,apttestcategory,apttestquestion,optiona,optionb,optionc,optiond,apttestanswer};
                 axios.put('/memberinfoupdateadmin', UpdatedMemInfo)
                 .then( res => {
                   alert('Updated successfully!');

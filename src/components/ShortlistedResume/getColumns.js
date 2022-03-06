@@ -107,45 +107,24 @@ const getColumns = ({ setRowsData }) => {
     },
     {
       id: "2",
-      field: "jobid",
-      label: "Job ID",
+      field: "shortlistedresumeid",
+      label: "Shortlisted Resume ID",
     },
     {
       id: "3",
-      field: "jobcode",
-      label: "Job Code"
+      field: "candidateresumeid",
+      label: "Candidate Resume ID"
     },
     {
       id: "4",
-      field: "jobcategory",
-      label: "Job Category"
+      field: "candidateid",
+      label: "Candidate ID"
     },
     {
       id: "5",
-      field: "jobrequirements",
-      label: "Job Requirements"
+      field: "shortlistedresumerank",
+      label: "Resume Rank"
     },
-    {
-      id: "6",
-      field: "jobworkexperience",
-      label: "Work Experience"
-    },
-    {
-      id: "7",
-      field: "jobpositions",
-      label: "No. of Positions"
-    },
-    {
-      id: "8",
-      field: "jobtitle",
-      label: "Job Title"
-    },
-    {
-      id: "9",
-      field: "joblocation",
-      label: "Job Location"
-    },
-   
     {
       id: "buttons",
       width: "max-content",
@@ -160,20 +139,20 @@ const getColumns = ({ setRowsData }) => {
         colIndex,
         rowIndex
       }) => (
-        <div style={styles.buttonsCellContainer}>
-          <button
-            title="Edit"
-            style={styles.editButton}
-            onClick={(e) => {
-              e.stopPropagation();
-              // alert("hello")
-              tableManager.rowEditApi.setEditRowId(data.id);
-            }}
-          >
-            {EDIT_SVG}
-          </button>
-        </div>
-      ),
+          <div style={styles.buttonsCellContainer}>
+            <button
+              title="Edit"
+              style={styles.editButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                // alert("hello")
+                tableManager.rowEditApi.setEditRowId(data.id);
+              }}
+            >
+              {EDIT_SVG}
+            </button>
+          </div>
+        ),
       editorCellRenderer: ({
         tableManager,
         value,
@@ -183,54 +162,53 @@ const getColumns = ({ setRowsData }) => {
         rowIndex,
         onChange
       }) => (
-        <div style={styles.buttonsCellEditorContainer}>
-          <button
-            title="Cancel"
-            style={styles.cancelButton}
-            onClick={(e) => {
-              e.stopPropagation();
-              tableManager.rowEditApi.setEditRowId(null);
-            }}
-          >
-            {CANCEL_SVG}
-          </button>
-          <button
-            title="Save"
-            style={styles.saveButton}
-            onClick={(e) => {
-              e.stopPropagation();
-              let rowsClone = [...tableManager.rowsApi.rows];
-              let updatedRowIndex = rowsClone.findIndex(
-                (r) => r.id === data.id
-              );
-              rowsClone[updatedRowIndex] = data;
-              setRowsData(rowsClone);
-              const postData= ()=>{
-                const {_id,id,jobid,jobcode,jobcategory,jobrequirements,jobworkexperience,jobpositions,jobtitle,joblocation}=data;
-                var UpdatedMemInfo ={_id,id, jobid,jobcode,jobcategory,jobrequirements,jobworkexperience,jobpositions,jobtitle,joblocation};
-                axios.put('/memberinfoupdateadmin', UpdatedMemInfo)
-                .then( res => {
-                  alert('Updated successfully!');
-                 }   
-                )
-                .catch(err => {
-                  console.log(err.response);
-                  alert('An error occurred! Try submitting the form again.');
-                });
-              } 
-              postData();
-              console.log(data);
-              console.log(data.id);
-              tableManager.rowEditApi.setEditRowId(null);
-            }}
-          >
-            {SAVE_SVG}
-          </button>
-        </div>
-      )
+          <div style={styles.buttonsCellEditorContainer}>
+            <button
+              title="Cancel"
+              style={styles.cancelButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                tableManager.rowEditApi.setEditRowId(null);
+              }}
+            >
+              {CANCEL_SVG}
+            </button>
+            <button
+              title="Save"
+              style={styles.saveButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                let rowsClone = [...tableManager.rowsApi.rows];
+                let updatedRowIndex = rowsClone.findIndex(
+                  (r) => r.id === data.id
+                );
+                rowsClone[updatedRowIndex] = data;
+                setRowsData(rowsClone);
+                const postData = () => {
+                  const { _id, id, shortlistedresumeid, candidateresumeid, candidateid, shortlistedresumerank } = data;
+                  var UpdatedMemInfo = { _id, id, shortlistedresumeid, candidateresumeid, candidateid, shortlistedresumerank };
+                  axios.put('/memberinfoupdateadmin', UpdatedMemInfo)
+                    .then(res => {
+                      alert('Updated successfully!');
+                    }
+                    )
+                    .catch(err => {
+                      console.log(err.response);
+                      alert('An error occurred! Try submitting the form again.');
+                    });
+                }
+                postData();
+                console.log(data);
+                console.log(data.id);
+                tableManager.rowEditApi.setEditRowId(null);
+              }}
+            >
+              {SAVE_SVG}
+            </button>
+          </div>
+        )
     }
   ];
 };
 
 export default getColumns;
- 
