@@ -30,7 +30,7 @@ function AptitudeTest(props) {
       />
 
       {show == true ?
-        <Modal show={show}>
+        <Modal show={show} centered>
           <Modal.Header >
             <Modal.Title> Add New Aptitude Question</Modal.Title>
           </Modal.Header>

@@ -17,9 +17,9 @@ function NavBar(props) {
                 <Nav.Link><Link to="/jobdetails" style={{textDecoration:"none",color:"gray"}}>Job Details</Link></Nav.Link>
                 <Nav.Link ><Link to="/aptitudequestion" style={{textDecoration:"none",color:"gray"}}>Aptitude Test</Link></Nav.Link>
                 <NavDropdown title="Candidate" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Candidate Profile</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">Candidate Resume</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Candidate Test</NavDropdown.Item>
+                <NavDropdown.Item href="candidateprofile">Candidate Profile</NavDropdown.Item>
+                <NavDropdown.Item href="candidateresume">Candidate Resume</NavDropdown.Item>
+                <NavDropdown.Item href="candidatetestscore">Candidate Test Score</NavDropdown.Item>
                 </NavDropdown>
                 <Nav.Link ><Link to="/shortlistedresume" style={{textDecoration:"none",color:"gray"}}>Shortlisted Resume</Link></Nav.Link>
                 <Nav.Link ><Link to="/finalshortlistedcandidates" style={{textDecoration:"none",color:"gray"}}>Final Shortlisted Candidates</Link></Nav.Link>

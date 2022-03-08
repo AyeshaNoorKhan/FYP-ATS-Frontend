@@ -44,7 +44,7 @@ function JobDetail(props) {
                 // data={data}
             /> */}
             {show==true?
-             <Modal show={show}>
+             <Modal show={show} centered>
              <Modal.Header >
                <Modal.Title>Add New Job</Modal.Title>
              </Modal.Header>

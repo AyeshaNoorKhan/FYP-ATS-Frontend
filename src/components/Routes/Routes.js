@@ -8,6 +8,9 @@ import NavBar from '../Home/NavBar.js';
 import AptitudeTest from '../AptitudeTest/AptitudeTest.js';
 import ShortlistedResume from '../ShortlistedResume/ShortlistedResume.js';
 import FinalShortlistedCandidates from '../FinalShortlistedCandidates/FinalShortlistedCandidates.js';
+import CandidateProfile from '../Candidate/CandidateProfile/CandidateProfile.js';
+import CandidateResume from '../Candidate/CandidateResume/CandidateResume.js';
+import CandidateTestScore from '../Candidate/CandidateTestScore/CandidateTestScore.js';
 
 function RoutesNav(props) {
     return (
@@ -21,8 +24,11 @@ function RoutesNav(props) {
                     <Route path="/aptitudequestion"  element={<AptitudeTest/>} />
                     <Route path="/aptitudequestion/addnewquestion"  element={<AptitudeTest/>} />
                     <Route path="/shortlistedresume"  element={<ShortlistedResume/>} />
-                    <Route path="/FinalShortlistedCandidates"  element={<FinalShortlistedCandidates/>} />
-
+                    <Route path="/finalshortlistedcandidates"  element={<FinalShortlistedCandidates/>} />
+                    <Route path="/candidateprofile"  element={<CandidateProfile/>} />
+                    <Route path="/candidateprofile/view"  element={<CandidateProfile/>} />
+                    <Route path="/candidateresume" element={<CandidateResume/>} />
+                    <Route path="/candidatetestscore" element={<CandidateTestScore/>} />
                 </Routes>
         </div>
     );
