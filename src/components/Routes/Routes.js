@@ -11,6 +11,7 @@ import FinalShortlistedCandidates from '../FinalShortlistedCandidates/FinalShort
 import CandidateProfile from '../Candidate/CandidateProfile/CandidateProfile.js';
 import CandidateResume from '../Candidate/CandidateResume/CandidateResume.js';
 import CandidateTestScore from '../Candidate/CandidateTestScore/CandidateTestScore.js';
+import GraphicalAptTest from '../GraphicalAptitudeTest/GraphicalAptTest.js';
 
 function RoutesNav(props) {
     return (
@@ -29,6 +30,7 @@ function RoutesNav(props) {
                     <Route path="/candidateprofile/view"  element={<CandidateProfile/>} />
                     <Route path="/candidateresume" element={<CandidateResume/>} />
                     <Route path="/candidatetestscore" element={<CandidateTestScore/>} />
+                    <Route path="/graphapttest" element={<GraphicalAptTest/>} />
                 </Routes>
         </div>
     );
