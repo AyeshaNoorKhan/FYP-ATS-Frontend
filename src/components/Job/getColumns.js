@@ -107,45 +107,104 @@ const getColumns = ({ setRowsData }) => {
     },
     {
       id: "2",
-      field: "jobid",
+      field: "job_id",
       label: "Job ID",
     },
     {
       id: "3",
-      field: "jobcode",
+      field: "job_code",
       label: "Job Code"
     },
     {
       id: "4",
-      field: "jobcategory",
+      field: "job_category",
       label: "Job Category"
     },
     {
       id: "5",
-      field: "jobrequirements",
-      label: "Job Requirements"
+      field: "job_title",
+      label: "Job Title"
     },
     {
       id: "6",
-      field: "jobworkexperience",
-      label: "Work Experience"
+      field: "job_location",
+      label: "Job Location"
     },
     {
       id: "7",
-      field: "jobpositions",
+      field: "job_positions",
       label: "No. of Positions"
     },
     {
       id: "8",
-      field: "jobtitle",
-      label: "Job Title"
+      field: "job_descriptionA",
+      label: "Job Description A"
     },
     {
       id: "9",
-      field: "joblocation",
-      label: "Job Location"
+      field: "job_descriptionB",
+      label: "Job Description B"
     },
-   
+    {
+      id: "10",
+      field: "job_descriptionC",
+      label: "Job Description C"
+    },
+    {
+      id: "11",
+      field: "job_descriptionD",
+      label: "Job Description D"
+    },
+    {
+      id: "12",
+      field: "job_descriptionE",
+      label: "Job Description E"
+    },
+    {
+      id: "13",
+      field: "job_descriptionF",
+      label: "Job Description F"
+    },
+    {
+      id: "14",
+      field: "job_descriptionG",
+      label: "Job Description G"
+    },
+    {
+      id: "15",
+      field: "job_descriptionH",
+      label: "Job Description H"
+    },
+    {
+      id: "16",
+      field: "job_qualificationA",
+      label: "Job Qualification A"
+    },
+    {
+      id: "17",
+      field: "job_qualificationB",
+      label: "Job Qualification B"
+    },
+    {
+      id: "18",
+      field: "job_qualificationC",
+      label: "Job Qualification C"
+    },
+    {
+      id: "19",
+      field: "job_qualificationD",
+      label: "Job Qualification D"
+    },
+    {
+      id: "20",
+      field: "job_qualificationE",
+      label: "Job Qualification E"
+    },
+    {
+      id: "21",
+      field: "job_experience",
+      label: "Job Experience"
+    },
     {
       id: "buttons",
       width: "max-content",
@@ -206,9 +265,13 @@ const getColumns = ({ setRowsData }) => {
               rowsClone[updatedRowIndex] = data;
               setRowsData(rowsClone);
               const postData= ()=>{
-                const {_id,id,jobid,jobcode,jobcategory,jobrequirements,jobworkexperience,jobpositions,jobtitle,joblocation}=data;
-                var UpdatedMemInfo ={_id,id, jobid,jobcode,jobcategory,jobrequirements,jobworkexperience,jobpositions,jobtitle,joblocation};
-                axios.put('/memberinfoupdateadmin', UpdatedMemInfo)
+                const {_id,job_id,job_code,job_category,job_title,job_location,job_positions,
+                  job_descriptionA,job_descriptionB,job_descriptionC,job_descriptionD,job_descriptionE,job_descriptionF,job_descriptionG,job_descriptionH,
+                  job_qualificationA,job_qualificationB,job_qualificationC,job_qualificationD,job_qualificationE,job_experience}=data;
+                var UpdatedJob ={_id,job_id,job_code,job_category,job_title,job_location,job_positions,
+                  job_descriptionA,job_descriptionB,job_descriptionC,job_descriptionD,job_descriptionE,job_descriptionF,job_descriptionG,job_descriptionH,
+                  job_qualificationA,job_qualificationB,job_qualificationC,job_qualificationD,job_qualificationE,job_experience};
+                axios.put('https://atsbackend.herokuapp.com/api/job/updatejob', UpdatedJob)
                 .then( res => {
                   alert('Updated successfully!');
                  }   
@@ -219,8 +282,6 @@ const getColumns = ({ setRowsData }) => {
                 });
               } 
               postData();
-              console.log(data);
-              console.log(data.id);
               tableManager.rowEditApi.setEditRowId(null);
             }}
           >

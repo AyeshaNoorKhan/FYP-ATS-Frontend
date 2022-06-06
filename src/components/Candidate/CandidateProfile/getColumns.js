@@ -107,92 +107,67 @@ const getColumns = ({ setRowsData }) => {
         },
         {
             id: "2",
-            field: "candidateid",
+            field: "cand_id",
             label: "Candidate ID",
         },
         {
             id: "3",
-            field: "candidateemail",
-            label: "Candidate Email"
+            field: "cand_name",
+            label: "Full Name"
         },
         {
             id: "4",
-            field: "candidatefname",
-            label: "First Name"
+            field: "cand_email",
+            label: "Email"
         },
         {
             id: "5",
-            field: "candidatemname",
-            label: "Middle Name"
+            field: "cand_contact",
+            label: "Contact No."
         },
         {
             id: "6",
-            field: "candidatelname",
-            label: "Last Name"
-        },
-        {
-            id: "7",
-            field: "candidatedob",
-            label: "Date Of Birth"
-        },
-        {
-            id: "8",
-            field: "candidatefathername",
-            label: "Father's Name"
-        },
-        {
-            id: "9",
-            field: "candidatephone",
-            label: "Phone No."
-        },
-        {
-            id: "10",
-            field: "candidatestreet",
-            label: "Street Address"
-        },
-        {
-            id: "11",
-            field: "candidatecity",
+            field: "cand_city",
             label: "City"
         },
         {
-            id: "12",
-            field: "candidatepostcode",
-            label: "Postal Code"
-        },
-        {
-            id: "13",
-            field: "candidatecountry",
+            id: "7",
+            field: "cand_country",
             label: "Country"
         },
         {
-            id: "15",
-            field: "candidatecnic",
-            label: "CNIC No."
-        },
-        {
-            id: "16",
-            field: "candidatemarital",
-            label: "Marital Status"
-        },
-        {
-            id: "17",
-            field: "candidatesource",
-            label: "Candidate Source"
-        },
-        {
-            id: "18",
-            field: "candidateref",
-            label: "Referred By"
-        },
-        {
-            id: "19",
-            field: "candidatehighestedu",
+            id: "8",
+            field: "cand_highedu",
             label: "Highest Education"
-        },{
-            id: "20",
-            field: "candidateexperience",
+        },
+        {
+            id: "9",
+            field: "cand_workexp",
             label: "Work Experience"
+        },
+        {
+            id: "10",
+            field: "cand_gender",
+            label: "Gender"
+        },
+        {
+            id: "11",
+            field: "cand_shiftspref",
+            label: "Shift Preferance"
+        },
+        {
+            id: "12",
+            field: "cand_hecverif",
+            label: "HEC Verified Degree"
+        },
+        {
+            id: "13",
+            field: "cand_positionApplied",
+            label: "Position Applied For"
+        },{
+            id: "14",
+            field: "cand_Resume",
+            label: "Candidate Resume"
         },
         {
             id: "buttons",
@@ -254,17 +229,17 @@ const getColumns = ({ setRowsData }) => {
                                 rowsClone[updatedRowIndex] = data;
                                 setRowsData(rowsClone);
                                 const postData = () => {
-                                    const { _id, id, candidateid, candidateemail, candidatefname, candidatemname, candidatelname, candidatedob, candidatephone, candidatestreet, candidatecity, candidatepostcode, candidatecountry, candidatecnic, candidatemarital, candidatesource, candidateref} = data;
-                                    var UpdatedMemInfo = { _id, id, candidateid, candidateemail, candidatefname, candidatemname, candidatelname, candidatedob, candidatephone, candidatestreet, candidatecity, candidatepostcode, candidatecountry, candidatecnic, candidatemarital, candidatesource, candidateref};
-                                    axios.put('/memberinfoupdateadmin', UpdatedMemInfo)
-                                        .then(res => {
-                                            alert('Updated successfully!');
-                                        }
-                                        )
-                                        .catch(err => {
-                                            console.log(err.response);
-                                            alert('An error occurred! Try submitting the form again.');
-                                        });
+                                    // const { _id, id, candidateid, candidateemail, candidatefname, candidatemname, candidatelname, candidatedob, candidatephone, candidatestreet, candidatecity, candidatepostcode, candidatecountry, candidatecnic, candidatemarital, candidatesource, candidateref} = data;
+                                    // var UpdatedMemInfo = { _id, id, candidateid, candidateemail, candidatefname, candidatemname, candidatelname, candidatedob, candidatephone, candidatestreet, candidatecity, candidatepostcode, candidatecountry, candidatecnic, candidatemarital, candidatesource, candidateref};
+                                    // axios.put('/memberinfoupdateadmin', UpdatedMemInfo)
+                                    //     .then(res => {
+                                    //         alert('Updated successfully!');
+                                    //     }
+                                    //     )
+                                    //     .catch(err => {
+                                            console.log("err.response");
+                                            // alert('An error occurred! Try submitting the form again.');
+                                        // });
                                 }
                                 postData();
                                 console.log(data);

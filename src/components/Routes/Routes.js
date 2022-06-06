@@ -12,6 +12,7 @@ import CandidateProfile from '../Candidate/CandidateProfile/CandidateProfile.js'
 import CandidateResume from '../Candidate/CandidateResume/CandidateResume.js';
 import CandidateTestScore from '../Candidate/CandidateTestScore/CandidateTestScore.js';
 import GraphicalAptTest from '../GraphicalAptitudeTest/GraphicalAptTest.js';
+import AddJobModal from '../Job/AddJobModal.js';
 
 function RoutesNav(props) {
     return (
@@ -21,7 +22,7 @@ function RoutesNav(props) {
                     <Route path="/"  element={<Login/>} />
                     <Route path="/home"  element={<Home/>} />
                     <Route path="/jobdetails"  element={<JobDetail/>} />
-                    <Route path="/jobdetails/addnewjob"  element={<JobDetail/>} />
+                    <Route path="/jobdetails/addnewjob"  element={<AddJobModal/>} />
                     <Route path="/aptitudequestion"  element={<AptitudeTest/>} />
                     <Route path="/aptitudequestion/addnewquestion"  element={<AptitudeTest/>} />
                     <Route path="/shortlistedresume"  element={<ShortlistedResume/>} />
