@@ -1,4 +1,22 @@
 .jobdetail
 {
-    margin: 7.5rem;
+    margin-top: 3rem;
+}
+.job-detail-list
+{
+    margin-top: 4rem;
+}
+.Button
+{
+    background-color: rgb(6, 89, 167);
+}
+@media (prefers-reduced-motion: no-preference) {
+    .jobdetail
+    {
+        margin-top: 7.5rem;
+    }
+    .job-detail-list
+    {
+    margin-top: 4rem;
+    }
 }

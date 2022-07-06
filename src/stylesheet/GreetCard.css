@@ -1,11 +1,10 @@
 .greetcard
 {
     display: flex;
-    width:60%;
-    margin-left: 22%;
+    justify-content: center;
 }
 .gc_h1
 {
-    color: rgb(0, 51, 153);
+    color: rgb(6, 89, 167);
     text-align: center;
 }

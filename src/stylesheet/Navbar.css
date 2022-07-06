@@ -1,0 +1,12 @@
+.navbar {
+    margin-left:4rem;
+    margin-right:4rem;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .navbar {
+      margin-left:3rem;
+      margin-right:3rem;
+    }
+  }
+  
