@@ -2,3 +2,18 @@
   text-align: left;
 }
 
+.btn-secondary:focus, .btn-primary:focus{
+  box-shadow: none !important;
+}
+
+.applyPageCardHeader.card-header {
+  font-size: large;
+  background: rgb(12, 89, 159);
+  color: white;
+}
+
+span.requiredSymbol {
+  color: red;
+  padding: 0 5px;
+}
+

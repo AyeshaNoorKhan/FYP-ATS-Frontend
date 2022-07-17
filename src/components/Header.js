@@ -4,7 +4,7 @@ import {Navbar, Container} from 'react-bootstrap';
 function Header(props) {
     return (
         <div className = "me-auto">
-            <Navbar fixed="top" style={{backgroundColor:"white"}}>
+            <Navbar style={{backgroundColor:"white"}}>
                 <Container>
                 <Navbar.Brand href="#"> <img src={Euronetlogo}  alt="Euronetlogo" /></Navbar.Brand>
                 </Container>
