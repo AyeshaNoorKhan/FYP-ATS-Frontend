@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Form, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import "../../stylesheet/JobDetail.css";
 import {
   EditorState,
@@ -11,9 +12,13 @@ import {
 } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-function AddJobModal(props) {
+export default function EditJobDetail() {
+  const [rowsData, setRowsData] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+  var { jobId } = useParams();
   const [descEditorState, setDescEditorState] = useState(() =>
     EditorState.createWithContent(
       ContentState.createFromBlockArray(convertFromHTML("<div></div>"))
@@ -29,7 +34,7 @@ function AddJobModal(props) {
       ContentState.createFromBlockArray(convertFromHTML("<div></div>"))
     )
   );
-
+  var { jobId } = useParams();
   const [jobInfo, setjobInfo] = useState({
     job_id: "",
     job_code: "",
@@ -63,14 +68,27 @@ function AddJobModal(props) {
   const [isError, setError] = useState(null);
   const addNewJobDetails = async (event) => {
     try {
-      //   event.preventDefault();
-      //   event.persist();
-      //   if (jobInfo.description.length < 50) {
-      //     setError("Required, Add description minimum length 50 characters");
-      //     return;
-      //   }
+      alert("Working");
+      let myobj = {
+        job_id: jobInfo.job_id,
+        job_code: jobInfo.job_code,
+        job_category: jobInfo.job_category,
+        job_title: jobInfo.job_title,
+        job_location: jobInfo.job_location,
+        job_positions: jobInfo.job_positions,
+        job_description: draftToHtml(
+          convertToRaw(descEditorState.getCurrentContent())
+        ),
+        job_qualification: draftToHtml(
+          convertToRaw(quaEditorState.getCurrentContent())
+        ),
+        job_experience: draftToHtml(
+          convertToRaw(expEditorState.getCurrentContent())
+        ),
+      };
+      console.log("myobj: ", myobj);
       axios
-        .post(`https://atsbackend.herokuapp.com/api/job/addjob`, {
+        .put(`https://atsbackend.herokuapp.com/api/job/updatejob/` + jobId, {
           job_id: jobInfo.job_id,
           job_code: jobInfo.job_code,
           job_category: jobInfo.job_category,
@@ -89,7 +107,7 @@ function AddJobModal(props) {
         })
         .then((res) => {
           if (res.status == 200) {
-            alert("Successfully Created New Job");
+            alert("Successfully Edited The Job");
           } else {
             alert("Failed to create new Job");
           }
@@ -98,7 +116,40 @@ function AddJobModal(props) {
       alert(error);
     }
   };
-
+  const htmlToDraftBlocks = (html) => {
+    const blocksFromHtml = htmlToDraft(html);
+    const { contentBlocks, entityMap } = blocksFromHtml;
+    const contentState = ContentState.createFromBlockArray(
+      contentBlocks,
+      entityMap
+    );
+    const editorState = EditorState.createWithContent(contentState);
+    return editorState;
+  };
+  useEffect(() => {
+    async function FetchAPI() {
+      const response = await fetch(
+        "https://atsbackend.herokuapp.com/api/job/getjob/" + jobId
+      );
+      const json = await response.json();
+      setLoading(true);
+      setTimeout(() => {
+        setjobInfo(json.getAllJob[0]);
+        setDescEditorState(
+          htmlToDraftBlocks(json.getAllJob[0].job_description)
+        );
+        setQuaEditorState(
+          htmlToDraftBlocks(json.getAllJob[0].job_qualification)
+        );
+        setExpEditorState(htmlToDraftBlocks(json.getAllJob[0].job_experience));
+        console.log("descEditorState:", descEditorState);
+        console.log("json.getAllJob[0]: ", json.getAllJob[0]);
+        console.log("jobInfo", jobInfo);
+        setLoading(false);
+      }, 1500);
+    }
+    FetchAPI();
+  }, []);
   return (
     <>
       <div className="jobdetail_modal">
@@ -112,7 +163,7 @@ function AddJobModal(props) {
                   padding: "7px",
                 }}
               >
-                ADD NEW JOB
+                EDIT JOB DETAIL
               </h5>
               <Row className="mb-3">
                 <Form.Group as={Col}>
@@ -289,7 +340,7 @@ function AddJobModal(props) {
                   onClick={addNewJobDetails}
                 >
                   {" "}
-                  Add Job{" "}
+                  Edit Job{" "}
                 </Button>
               </div>
             </Form>
@@ -299,5 +350,3 @@ function AddJobModal(props) {
     </>
   );
 }
-
-export default AddJobModal;

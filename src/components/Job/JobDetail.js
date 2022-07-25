@@ -1,15 +1,29 @@
 import React, { useState, useEffect } from "react";
-import GridTable from "@nadavshaar/react-grid-table";
-import getColumns from "./getColumns.js";
-import { Button } from "react-bootstrap";
+import { Button, ButtonGroup } from "react-bootstrap";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import "../../stylesheet/JobDetail.css";
+import ListGroup from "react-bootstrap/ListGroup";
 
 function JobDetail(props) {
-  const [show, setShow] = useState(false);
   const [rowsData, setRowsData] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
+  const deleteSpecificJob = (jobId) => {
+    try {
+      axios
+        .delete(`https://atsbackend.herokuapp.com/api/job/deletejob/` + jobId)
+        .then((res) => {
+          if (res.status == 200) {
+            alert("Job Deleted");
+          } else {
+            alert("Failed to delete the job");
+          }
+        });
+    } catch (error) {
+      alert(error);
+    }
+  };
   useEffect(() => {
     async function FetchAPI() {
       const response = await fetch(
@@ -24,7 +38,7 @@ function JobDetail(props) {
       }, 1500);
     }
     FetchAPI();
-  }, []);
+  }, [rowsData]);
 
   return (
     <div className="job-detail-list">
@@ -46,7 +60,7 @@ function JobDetail(props) {
 
       <p></p>
 
-      <GridTable
+      {/* <GridTable
         columns={getColumns({ setRowsData })}
         rows={rowsData}
         isLoading={isLoading}
@@ -55,7 +69,70 @@ function JobDetail(props) {
           tableManager.rowSelectionApi.getIsRowSelectable(data.id) &&
           tableManager.rowSelectionApi.toggleRowSelection(data.id)
         }
-      />
+      /> */}
+      <ListGroup>
+        {rowsData.map((job, index) => (
+          <ListGroup.Item key={index}>
+            <div className="list-left">
+              <h6>Job ID: {job.job_id}</h6>
+              <h6>Job Code: {job.job_code}</h6>
+              <h6>Job Category: {job.job_category}</h6>
+              <h6>Job Title: {job.job_title}</h6>
+            </div>
+            <div className="list-right">
+              <ButtonGroup aria-label="Basic example">
+                <Link
+                  to={"/jobdetails/getjob/" + job.job_id}
+                  style={{
+                    textDecoration: "none",
+                    color: "gray",
+                    borderRadius: "none",
+                  }}
+                >
+                  <Button
+                    style={{
+                      backgroundColor: "rgb(6, 89, 167)",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "1px",
+                    }}
+                  >
+                    View
+                  </Button>
+                </Link>
+                <Link
+                  to={"/jobdetails/updatejob/" + job.job_id}
+                  style={{
+                    textDecoration: "none",
+                    color: "gray",
+                    borderRadius: "none",
+                  }}
+                >
+                  <Button
+                    variant="success"
+                    style={{
+                      border: "none",
+                      borderRadius: "1px",
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </Link>
+                <Button
+                  variant="danger"
+                  style={{
+                    border: "none",
+                    borderRadius: "1px",
+                  }}
+                  onClick={() => deleteSpecificJob(job.job_id)}
+                >
+                  Delete
+                </Button>
+              </ButtonGroup>
+            </div>
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
     </div>
   );
 }

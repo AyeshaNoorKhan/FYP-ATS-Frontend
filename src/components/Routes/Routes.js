@@ -12,6 +12,8 @@ import CandidateResume from "../Candidate/CandidateResume/CandidateResume.js";
 import CandidateTestScore from "../Candidate/CandidateTestScore/CandidateTestScore.js";
 import GraphicalAptTest from "../GraphicalAptitudeTest/GraphicalAptTest.js";
 import AddJobModal from "../Job/AddJobModal.js";
+import SpecificJobDetail from "../Job/SpecificJobDetail.js";
+import EditJobDetail from "../Job/EditJobDetail.js";
 
 function RoutesNav(props) {
   return (
@@ -21,6 +23,14 @@ function RoutesNav(props) {
         <Route path="/home" element={<Home />} />
         <Route path="/jobdetails" element={<JobDetail />} />
         <Route path="/jobdetails/addnewjob" element={<AddJobModal />} />
+        <Route
+          path="/jobdetails/getjob/:jobId"
+          element={<SpecificJobDetail />}
+        />
+        <Route
+          path="/jobdetails/updatejob/:jobId"
+          element={<EditJobDetail />}
+        />
         <Route path="/aptitudequestion" element={<AptitudeTest />} />
         <Route
           path="/aptitudequestion/addnewquestion"

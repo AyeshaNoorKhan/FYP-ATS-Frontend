@@ -11,7 +11,7 @@ function NavBarLogin(props) {
         collapseOnSelect
         expand="lg"
         fixed="top"
-        // style={{ backgroundColor: "white" }}
+        style={{ backgroundColor: "white" }}
       >
         {/* <Container> */}
         <Link to="/" style={{ textDecoration: "none", color: "gray" }}>
