@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import GridTable from "@nadavshaar/react-grid-table";
 import getColumns from "./getColumns.js";
 import { Button, Modal, Form, Row, Col } from "react-bootstrap";
-// import {Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 import "../../stylesheet/JobDetail.css";
 
 function AptitudeTest(props) {
@@ -13,13 +13,31 @@ function AptitudeTest(props) {
 
   return (
     <div className="job-detail-list">
-      <Button
-        style={{ backgroundColor: "rgb(6, 89, 167)", color: "white" }}
-        onClick={() => setShow(true)}
+    <Link
+        to="/aptitudequestion/addnewquestion"
+        style={{ textDecoration: "none", color: "gray" }}
       >
-        Add New Aptitude Question
-      </Button>
+        <Button
+          style={{
+            backgroundColor: "rgb(6, 89, 167)",
+            color: "white",
+            border: "none",
+          }}
+        >
+          {" "}
+          Add New Aptitude Question{" "}
+        </Button>
+      </Link>
       <p></p>
+      <h5
+        style={{
+          backgroundColor: "rgb(6, 89, 167)",
+          color: "white",
+          padding: "7px",
+        }}
+      >
+        APTITUDE TEST QUESTIONS
+      </h5>
       <GridTable
         columns={getColumns({ setRowsData })}
         //   rows={rowsData}

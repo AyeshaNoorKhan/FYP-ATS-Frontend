@@ -32,6 +32,15 @@ function CandidateProfile(props) {
 
   return (
     <div className="jobdetail">
+      <h5
+        style={{
+          backgroundColor: "rgb(6, 89, 167)",
+          color: "white",
+          padding: "7px",
+        }}
+      >
+        CANDIDATE INFORMATION
+      </h5>
       <GridTable
         columns={getColumns({ setRowsData })}
         rows={rowsData}

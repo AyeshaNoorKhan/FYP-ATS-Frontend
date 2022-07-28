@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { Form, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import "../../stylesheet/JobDetail.css";
+import "../../stylesheet/Modal.css"
 import {
   EditorState,
   convertToRaw,
@@ -61,6 +62,21 @@ function AddJobModal(props) {
     setExpEditorState(expEditorState);
   };
   const [isError, setError] = useState(null);
+
+  const [showSuccess, setShowSuccess] = useState(false);
+  const handleSuccessShow = () => setShowSuccess(true);
+  const handleSuccessClose = () => setShowSuccess(false);
+
+  const [showFailure, setShowFailure] = useState(false);
+  const handleFailureShow = () => setShowFailure(true);
+  const handleFailureClose = () => setShowFailure(false);
+
+  const [showError, setShowError] = useState(false);
+  const handleErrorShow = () => setShowError(true);
+  const handleErrorClose = () => setShowError(false);
+
+  const [modalError, setModalError] = useState("");
+
   const addNewJobDetails = async (event) => {
     try {
       //   event.preventDefault();
@@ -89,13 +105,14 @@ function AddJobModal(props) {
         })
         .then((res) => {
           if (res.status == 200) {
-            alert("Successfully Created New Job");
+            handleSuccessShow();
           } else {
-            alert("Failed to create new Job");
+            handleFailureShow();
           }
         });
     } catch (error) {
-      alert(error);
+      handleErrorShow();
+      setModalError(error);
     }
   };
 
@@ -189,7 +206,7 @@ function AddJobModal(props) {
               <div className="clearfix"></div>
 
               <div className="form-group col-md-12 editor">
-                <Form.Text className="text-muted">Job Decscription</Form.Text>
+                <Form.Text className="text-muted">Job Description</Form.Text>
                 <br />
                 <Editor
                   editorState={descEditorState}
@@ -292,10 +309,52 @@ function AddJobModal(props) {
                   Add Job{" "}
                 </Button>
               </div>
+
+              {/* temp */}
+              {/* <Button onClick={handleSuccessShow}>Success</Button>
+              <Button onClick={handleFailureShow}>Failure</Button> */}
+              {/* temp */}
+
             </Form>
           </div>
         </div>
       </div>
+
+      <Modal contentClassName="modalSuccess" style={{ color: "#0f5132" }} show={showSuccess} onHide={handleSuccessClose} backdrop="static" keyboard={false} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Success</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Successfully Created New Job</Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={handleSuccessClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal contentClassName="modalFailure" show={showFailure} onHide={handleFailureClose} backdrop="static" keyboard={false} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Failure</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Failed to create new Job</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleFailureClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal contentClassName="modalFailure" show={showError} onHide={handleErrorClose} backdrop="static" keyboard={false} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Error</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalError}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleErrorClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

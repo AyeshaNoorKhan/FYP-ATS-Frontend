@@ -5,6 +5,7 @@ import Home from "../Home/Home.js";
 import "../../stylesheet/Routs.css";
 import JobDetail from "../Job/JobDetail.js";
 import AptitudeTest from "../AptitudeTest/AptitudeTest.js";
+import AddAptitudeTestQuestion from "../AptitudeTest/AddAptitudeTestQuestion.js"
 import ShortlistedResume from "../ShortlistedResume/ShortlistedResume.js";
 import FinalShortlistedCandidates from "../FinalShortlistedCandidates/FinalShortlistedCandidates.js";
 import CandidateProfile from "../Candidate/CandidateProfile/CandidateProfile.js";
@@ -34,7 +35,7 @@ function RoutesNav(props) {
         <Route path="/aptitudequestion" element={<AptitudeTest />} />
         <Route
           path="/aptitudequestion/addnewquestion"
-          element={<AptitudeTest />}
+          element={<AddAptitudeTestQuestion />}
         />
         <Route path="/shortlistedresume" element={<ShortlistedResume />} />
         <Route

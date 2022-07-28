@@ -13,9 +13,18 @@ function CandidateResume(props) {
 
     return (
         <div className="jobdetail">
+            <h5
+                style={{
+                    backgroundColor: "rgb(6, 89, 167)",
+                    color: "white",
+                    padding: "7px",
+                }}
+            >
+                RESUME INFORMATION
+            </h5>
             <GridTable
                 columns={getColumns({ setRowsData })}
-               onRowClick={({ rowIndex, data, column, isEdit, event }, tableManager) =>
+                onRowClick={({ rowIndex, data, column, isEdit, event }, tableManager) =>
                     !isEdit &&
                     tableManager.rowSelectionApi.getIsRowSelectable(data.id) &&
                     tableManager.rowSelectionApi.toggleRowSelection(data.id)
