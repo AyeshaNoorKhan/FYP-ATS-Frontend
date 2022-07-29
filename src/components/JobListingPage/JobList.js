@@ -7,12 +7,16 @@ function JobList() {
     const [joblist, setJobList] = useState([]);
 
     useEffect(() => {
-        Axios.get("https://vazeema-siddiqui.github.io/JSON-for-FYP/dummyjobs.json")
+        Axios.get("https://atsbackend.herokuapp.com/api/job/getjobs")
             .then((response) => {
-                setJobList(() => response.data);
+                const jobData = response.data.getAllJob;
+                setJobList(jobData);
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
             })
 
-    }, [])
+    }, [joblist])
 
     return (
         <div className="joblist">
