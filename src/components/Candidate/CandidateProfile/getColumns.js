@@ -167,15 +167,29 @@ const getColumns = ({ setRowsData }) => {
     },
     {
       id: "14",
-      field: "cand_Resume",
-      label: "Candidate Resume",
+      field: "cand_ResumeURL",
+      label: "View Resume",
       cellRenderer: ({ data }) => {
-        console.log("data", data);
+        return (
+          <a href={data?.cand_ResumeURL} target="_blank">
+            View PDF
+          </a>
+        );
+      },
+    },
+    {
+      id: "15",
+      field: "cand_Resume",
+      label: "Download Resume",
+      cellRenderer: ({ data }) => {
         const link = window.URL.createObjectURL(
           new Blob([new Uint8Array(data?.cand_Resume?.data).buffer])
         );
         return (
-          <a href={link} download="file.pdf">
+          <a
+            href={link}
+            download={`${data?.cand_id}-${data?.cand_name}-Resume.pdf`}
+          >
             {" "}
             Download PDF
           </a>

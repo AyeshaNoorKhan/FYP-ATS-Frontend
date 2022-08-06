@@ -5,7 +5,7 @@ import Home from "../Home/Home.js";
 import "../../stylesheet/Routs.css";
 import JobDetail from "../Job/JobDetail.js";
 import AptitudeTest from "../AptitudeTest/AptitudeTest.js";
-import AddAptitudeTestQuestion from "../AptitudeTest/AddAptitudeTestQuestion.js"
+import AddAptitudeTestQuestion from "../AptitudeTest/AddAptitudeTestQuestion.js";
 import ShortlistedResume from "../ShortlistedResume/ShortlistedResume.js";
 import FinalShortlistedCandidates from "../FinalShortlistedCandidates/FinalShortlistedCandidates.js";
 import CandidateProfile from "../Candidate/CandidateProfile/CandidateProfile.js";
@@ -15,6 +15,7 @@ import GraphicalAptTest from "../GraphicalAptitudeTest/GraphicalAptTest.js";
 import AddJobModal from "../Job/AddJobModal.js";
 import SpecificJobDetail from "../Job/SpecificJobDetail.js";
 import EditJobDetail from "../Job/EditJobDetail.js";
+import EditAptitude from "../AptitudeTest/EditAptitude.js";
 
 function RoutesNav(props) {
   return (
@@ -36,6 +37,10 @@ function RoutesNav(props) {
         <Route
           path="/aptitudequestion/addnewquestion"
           element={<AddAptitudeTestQuestion />}
+        />
+        <Route
+          path="/aptitudequestion/updateaptques/:aptId"
+          element={<EditAptitude />}
         />
         <Route path="/shortlistedresume" element={<ShortlistedResume />} />
         <Route

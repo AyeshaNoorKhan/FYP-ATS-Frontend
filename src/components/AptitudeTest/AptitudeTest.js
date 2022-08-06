@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import MaterialTable from 'material-table';
 import GridTable from "@nadavshaar/react-grid-table";
 import getColumns from "./getColumns.js";
 import { Button, Modal, Form, Row, Col } from "react-bootstrap";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../stylesheet/JobDetail.css";
 
 function AptitudeTest(props) {
@@ -11,9 +11,23 @@ function AptitudeTest(props) {
   const [rowsData, setRowsData] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
+  useEffect(() => {
+    async function FetchAPI() {
+      const response = await fetch(
+        "https://atsbackend.herokuapp.com/api/aptTest/getapttests"
+      );
+      const json = await response.json();
+      setLoading(true);
+      setTimeout(() => {
+        setRowsData(json.getAllAptTest);
+        setLoading(false);
+      }, 1500);
+    }
+    FetchAPI();
+  }, [rowsData]);
   return (
     <div className="job-detail-list">
-    <Link
+      <Link
         to="/aptitudequestion/addnewquestion"
         style={{ textDecoration: "none", color: "gray" }}
       >
@@ -40,8 +54,8 @@ function AptitudeTest(props) {
       </h5>
       <GridTable
         columns={getColumns({ setRowsData })}
-        //   rows={rowsData}
-        //   isLoading={isLoading}
+        rows={rowsData}
+        isLoading={isLoading}
         onRowClick={({ rowIndex, data, column, isEdit, event }, tableManager) =>
           !isEdit &&
           tableManager.rowSelectionApi.getIsRowSelectable(data.id) &&

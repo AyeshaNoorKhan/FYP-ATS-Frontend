@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { Form, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import "../../stylesheet/JobDetail.css";
-import "../../stylesheet/Modal.css";
 import {
   EditorState,
   convertToRaw,
@@ -12,9 +12,12 @@ import {
 } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-function AddJobModal(props) {
+export default function EditAptitude() {
+  const [isLoading, setLoading] = useState(false);
+  var { aptId } = useParams();
   const [quesEditorState, setQuesEditorState] = useState(() =>
     EditorState.createWithContent(
       ContentState.createFromBlockArray(convertFromHTML("<div></div>"))
@@ -65,22 +68,25 @@ function AddJobModal(props) {
 
   const [modalError, setModalError] = useState("");
 
-  const addNewAptQues = async (event) => {
+  const updateAptQues = async (event) => {
     try {
       alert("working");
       axios
-        .post(`https://atsbackend.herokuapp.com/api/aptTest/addapttest`, {
-          aptTest_id: aptInfo.aptTest_id,
-          aptTest_category: aptInfo.aptTest_category,
-          aptTest_question: draftToHtml(
-            convertToRaw(quesEditorState.getCurrentContent())
-          ),
-          aptTest_optionA: aptInfo.aptTest_optionA,
-          aptTest_optionB: aptInfo.aptTest_optionB,
-          aptTest_optionC: aptInfo.aptTest_optionC,
-          aptTest_optionD: aptInfo.aptTest_optionD,
-          aptTest_answer: aptInfo.aptTest_answer,
-        })
+        .post(
+          `https://atsbackend.herokuapp.com/api/aptTest/updateaptques/` + aptId,
+          {
+            aptTest_id: aptInfo.aptTest_id,
+            aptTest_category: aptInfo.aptTest_category,
+            aptTest_question: draftToHtml(
+              convertToRaw(quesEditorState.getCurrentContent())
+            ),
+            aptTest_optionA: aptInfo.aptTest_optionA,
+            aptTest_optionB: aptInfo.aptTest_optionB,
+            aptTest_optionC: aptInfo.aptTest_optionC,
+            aptTest_optionD: aptInfo.aptTest_optionD,
+            aptTest_answer: aptInfo.aptTest_answer,
+          }
+        )
         .then((res) => {
           if (res.status == 200) {
             handleSuccessShow();
@@ -93,7 +99,33 @@ function AddJobModal(props) {
       setModalError(error);
     }
   };
-
+  const htmlToDraftBlocks = (html) => {
+    const blocksFromHtml = htmlToDraft(html);
+    const { contentBlocks, entityMap } = blocksFromHtml;
+    const contentState = ContentState.createFromBlockArray(
+      contentBlocks,
+      entityMap
+    );
+    const editorState = EditorState.createWithContent(contentState);
+    return editorState;
+  };
+  useEffect(() => {
+    async function FetchAPI() {
+      const response = await fetch(
+        "https://atsbackend.herokuapp.com/api/aptTest/getapttest/" + aptId
+      );
+      const json = await response.json();
+      setLoading(true);
+      setTimeout(() => {
+        setaptInfo(json.getaptques[0]);
+        setQuesEditorState(
+          htmlToDraftBlocks(json.getaptques[0].aptTest_question)
+        );
+        setLoading(false);
+      }, 1500);
+    }
+    FetchAPI();
+  }, []);
   return (
     <>
       <div className="jobdetail_modal">
@@ -107,7 +139,7 @@ function AddJobModal(props) {
                   padding: "7px",
                 }}
               >
-                ADD NEW APTITUDE QUESTION
+                EDIT APTITUDE QUESTION
               </h5>
               <Row className="mb-3">
                 <Form.Group as={Col}>
@@ -275,7 +307,7 @@ function AddJobModal(props) {
                     color: "white",
                     border: "none",
                   }}
-                  onClick={addNewAptQues}
+                  onClick={updateAptQues}
                 >
                   {" "}
                   Add Aptitude Question{" "}
@@ -298,7 +330,7 @@ function AddJobModal(props) {
         <Modal.Header closeButton>
           <Modal.Title>Success</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Successfully added new Test Question</Modal.Body>
+        <Modal.Body>Successfully Updates Test Question</Modal.Body>
         <Modal.Footer>
           <Button variant="success" onClick={handleSuccessClose}>
             Close
@@ -346,5 +378,3 @@ function AddJobModal(props) {
     </>
   );
 }
-
-export default AddJobModal;
