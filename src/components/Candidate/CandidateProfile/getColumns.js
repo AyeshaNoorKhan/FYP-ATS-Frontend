@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import { FaFileDownload } from "react-icons/fa";
+import { FaFilePdf } from "react-icons/fa";
 
 const EDIT_SVG = (
   <svg
@@ -57,13 +59,14 @@ const styles = {
     alignItems: "center",
   },
   editButton: {
-    background: "#f3f3f3",
+    background: "rgb(6, 89, 167)",
     outline: "none",
     cursor: "pointer",
-    padding: 4,
+    padding: 7,
+    marginRight: "1px",
     display: "inline-flex",
     border: "none",
-    borderRadius: "50%",
+    borderRadius: "0%",
     boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
   },
   buttonsCellEditorContainer: {
@@ -165,37 +168,37 @@ const getColumns = ({ setRowsData }) => {
       field: "cand_positionApplied",
       label: "Position Applied For",
     },
-    {
-      id: "14",
-      field: "cand_ResumeURL",
-      label: "View Resume",
-      cellRenderer: ({ data }) => {
-        return (
-          <a href={data?.cand_ResumeURL} target="_blank">
-            View PDF
-          </a>
-        );
-      },
-    },
-    {
-      id: "15",
-      field: "cand_Resume",
-      label: "Download Resume",
-      cellRenderer: ({ data }) => {
-        const link = window.URL.createObjectURL(
-          new Blob([new Uint8Array(data?.cand_Resume?.data).buffer])
-        );
-        return (
-          <a
-            href={link}
-            download={`${data?.cand_id}-${data?.cand_name}-Resume.pdf`}
-          >
-            {" "}
-            Download PDF
-          </a>
-        );
-      },
-    },
+    // {
+    //   id: "14",
+    //   field: "cand_ResumeURL",
+    //   label: "View Resume",
+    //   cellRenderer: ({ data }) => {
+    //     return (
+    //       <a href={data?.cand_ResumeURL} target="_blank">
+    //         View PDF
+    //       </a>
+    //     );
+    //   },
+    // },
+    // {
+    //   id: "15",
+    //   field: "cand_Resume",
+    //   label: "Download Resume",
+    //   cellRenderer: ({ data }) => {
+    //     const link = window.URL.createObjectURL(
+    //       new Blob([new Uint8Array(data?.cand_Resume?.data).buffer])
+    //     );
+    //     return (
+    //       <a
+    //         href={link}
+    //         download={`${data?.cand_id}-${data?.cand_name}-Resume.pdf`}
+    //       >
+    //         {" "}
+    //         <FaFileDownload style={{ color: "black" }} />
+    //       </a>
+    //     );
+    //   },
+    // },
     {
       id: "buttons",
       width: "max-content",
@@ -210,74 +213,35 @@ const getColumns = ({ setRowsData }) => {
         colIndex,
         rowIndex,
       }) => {
-        <div style={styles.buttonsCellContainer}>
-          <button
-            title="Edit"
-            style={styles.editButton}
-            onClick={(e) => {
-              e.stopPropagation();
-              // alert("hello")
-              tableManager.rowEditApi.setEditRowId(data.id);
-            }}
-          >
-            {EDIT_SVG}
-          </button>
-        </div>;
+        const link = window.URL.createObjectURL(
+          new Blob([new Uint8Array(data?.cand_Resume?.data).buffer])
+        );
+        return (
+          <div style={styles.buttonsCellContainer}>
+            {/* <button title="Edit" style={styles.editButton}>
+              {EDIT_SVG}
+            </button> */}
+            <a
+              href={data?.cand_ResumeURL}
+              target="_blank"
+              style={styles.editButton}
+              title="View Resume"
+            >
+              <FaFilePdf style={{ color: "white" }} />
+            </a>
+            <p> </p>
+            <a
+              href={link}
+              download={`${data?.cand_id}-${data?.cand_name}-Resume.pdf`}
+              style={styles.editButton}
+              title="Download Resume"
+            >
+              {" "}
+              <FaFileDownload style={{ color: "white" }} />
+            </a>
+          </div>
+        );
       },
-      editorCellRenderer: ({
-        tableManager,
-        value,
-        data,
-        column,
-        colIndex,
-        rowIndex,
-        onChange,
-      }) => (
-        <div style={styles.buttonsCellEditorContainer}>
-          <button
-            title="Cancel"
-            style={styles.cancelButton}
-            onClick={(e) => {
-              e.stopPropagation();
-              tableManager.rowEditApi.setEditRowId(null);
-            }}
-          >
-            {CANCEL_SVG}
-          </button>
-          <button
-            title="Save"
-            style={styles.saveButton}
-            onClick={(e) => {
-              e.stopPropagation();
-              let rowsClone = [...tableManager.rowsApi.rows];
-              let updatedRowIndex = rowsClone.findIndex(
-                (r) => r.id === data.id
-              );
-              rowsClone[updatedRowIndex] = data;
-              setRowsData(rowsClone);
-              const postData = () => {
-                // const { _id, id, candidateid, candidateemail, candidatefname, candidatemname, candidatelname, candidatedob, candidatephone, candidatestreet, candidatecity, candidatepostcode, candidatecountry, candidatecnic, candidatemarital, candidatesource, candidateref} = data;
-                // var UpdatedMemInfo = { _id, id, candidateid, candidateemail, candidatefname, candidatemname, candidatelname, candidatedob, candidatephone, candidatestreet, candidatecity, candidatepostcode, candidatecountry, candidatecnic, candidatemarital, candidatesource, candidateref};
-                // axios.put('/memberinfoupdateadmin', UpdatedMemInfo)
-                //     .then(res => {
-                //         alert('Updated successfully!');
-                //     }
-                //     )
-                //     .catch(err => {
-                console.log("err.response");
-                // alert('An error occurred! Try submitting the form again.');
-                // });
-              };
-              postData();
-              console.log(data);
-              console.log(data.id);
-              tableManager.rowEditApi.setEditRowId(null);
-            }}
-          >
-            {SAVE_SVG}
-          </button>
-        </div>
-      ),
     },
   ];
 };

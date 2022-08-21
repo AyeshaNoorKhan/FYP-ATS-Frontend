@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaChartBar } from "react-icons/fa";
 
 const EDIT_SVG = (
   <svg
@@ -60,12 +61,12 @@ const styles = {
     background: "rgb(6, 89, 167)",
     outline: "none",
     cursor: "pointer",
-    padding: 7,
+    padding: 9,
+    marginRight: "1px",
     display: "inline-flex",
     border: "none",
     borderRadius: "0%",
     boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
-    color: "white",
   },
   buttonsCellEditorContainer: {
     height: "100%",
@@ -175,7 +176,7 @@ const getColumns = ({ setRowsData }) => {
               title={"Graphical Score View of Candidate " + data.cand_id}
               style={styles.editButton}
             >
-              Graphical View
+              <FaChartBar style={{ color: "white" }} />
             </button>
           </Link>
           {/* <button

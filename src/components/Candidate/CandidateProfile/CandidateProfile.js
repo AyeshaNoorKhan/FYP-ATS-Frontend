@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import GridTable from "@nadavshaar/react-grid-table";
 import getColumns from "./getColumns.js";
-import { Button, Modal, Form, Row, Col, Container } from "react-bootstrap";
 import "../../../stylesheet/JobDetail.css";
 
 function CandidateProfile(props) {
