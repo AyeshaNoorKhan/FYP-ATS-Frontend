@@ -51,7 +51,10 @@ function RoutesNav(props) {
         <Route path="/candidateprofile/view" element={<CandidateProfile />} />
         <Route path="/candidateresume" element={<CandidateResume />} />
         <Route path="/candidatetestscore" element={<CandidateTestScore />} />
-        <Route path="/graphapttest" element={<GraphicalAptTest />} />
+        <Route
+          path="/candidatetestscore/graphicalscoreview/:jobID/:candID"
+          element={<GraphicalAptTest />}
+        />
       </Routes>
     </div>
   );

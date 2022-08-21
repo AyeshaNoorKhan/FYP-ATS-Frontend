@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios';
+import { Link } from "react-router-dom";
 
 const EDIT_SVG = (
   <svg
@@ -49,22 +49,23 @@ const SAVE_SVG = (
 const styles = {
   select: { margin: "0 20px" },
   buttonsCellContainer: {
-    padding: "0 20px",
+    padding: "0 0px",
     width: "100%",
     height: "100%",
     display: "flex",
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "center",
   },
   editButton: {
-    background: "#f3f3f3",
+    background: "rgb(6, 89, 167)",
     outline: "none",
     cursor: "pointer",
-    padding: 4,
+    padding: 7,
     display: "inline-flex",
     border: "none",
-    borderRadius: "50%",
-    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)"
+    borderRadius: "0%",
+    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
+    color: "white",
   },
   buttonsCellEditorContainer: {
     height: "100%",
@@ -72,7 +73,7 @@ const styles = {
     display: "inline-flex",
     padding: "0 20px",
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "center",
   },
   cancelButton: {
     background: "#f3f3f3",
@@ -83,7 +84,7 @@ const styles = {
     display: "inline-flex",
     border: "none",
     borderRadius: "50%",
-    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)"
+    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
   },
   saveButton: {
     background: "#f3f3f3",
@@ -93,8 +94,8 @@ const styles = {
     display: "inline-flex",
     border: "none",
     borderRadius: "50%",
-    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)"
-  }
+    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
+  },
 };
 
 const getColumns = ({ setRowsData }) => {
@@ -103,22 +104,47 @@ const getColumns = ({ setRowsData }) => {
       id: "checkbox",
       visible: true,
       pinned: true,
-      width: "54px"
+      width: "54px",
     },
     {
       id: "2",
-      field: "candidatetestid",
-      label: "Candidate Test ID",
+      field: "cand_score_id",
+      label: "Candidate Score ID",
     },
     {
       id: "3",
-      field: "candidateid",
-      label: "Candidate ID"
+      field: "cand_id",
+      label: "Candidate ID",
     },
     {
       id: "4",
-      field: "candidategrade",
-      label: "Grade ( Pass / Fail )"
+      field: "job_id",
+      label: "Applied Job ID",
+    },
+    {
+      id: "5",
+      field: "oop_score",
+      label: "OOP Score",
+    },
+    {
+      id: "6",
+      field: "ds_score",
+      label: "DS Score",
+    },
+    {
+      id: "7",
+      field: "gk_score",
+      label: "GK Score",
+    },
+    {
+      id: "8",
+      field: "other_score",
+      label: "Other Score",
+    },
+    {
+      id: "9",
+      field: "total_score",
+      label: "Total Score",
     },
     {
       id: "buttons",
@@ -132,10 +158,27 @@ const getColumns = ({ setRowsData }) => {
         data,
         column,
         colIndex,
-        rowIndex
+        rowIndex,
       }) => (
         <div style={styles.buttonsCellContainer}>
-          <button
+          <Link
+            to={
+              "/candidatetestscore/graphicalscoreview/" +
+              data.job_id +
+              "/" +
+              data.cand_id
+            }
+            style={{ textDecoration: "none" }}
+          >
+            {" "}
+            <button
+              title={"Graphical Score View of Candidate " + data.cand_id}
+              style={styles.editButton}
+            >
+              Graphical View
+            </button>
+          </Link>
+          {/* <button
             title="Edit"
             style={styles.editButton}
             onClick={(e) => {
@@ -144,65 +187,11 @@ const getColumns = ({ setRowsData }) => {
               tableManager.rowEditApi.setEditRowId(data.id);
             }}
           >
-            {EDIT_SVG}
-          </button>
+            {SAVE_SVG}
+          </button>*/}
         </div>
       ),
-      editorCellRenderer: ({
-        tableManager,
-        value,
-        data,
-        column,
-        colIndex,
-        rowIndex,
-        onChange
-      }) => (
-        <div style={styles.buttonsCellEditorContainer}>
-          <button
-            title="Cancel"
-            style={styles.cancelButton}
-            onClick={(e) => {
-              e.stopPropagation();
-              tableManager.rowEditApi.setEditRowId(null);
-            }}
-          >
-            {CANCEL_SVG}
-          </button>
-          <button
-            title="Save"
-            style={styles.saveButton}
-            onClick={(e) => {
-              e.stopPropagation();
-              let rowsClone = [...tableManager.rowsApi.rows];
-              let updatedRowIndex = rowsClone.findIndex(
-                (r) => r.id === data.id
-              );
-              rowsClone[updatedRowIndex] = data;
-              setRowsData(rowsClone);
-              const postData= ()=>{
-                const {_id,id,candidatetestid,candidateid,candidategrade}=data;
-                var UpdatedMemInfo ={_id,id, candidatetestid,candidateid,candidategrade};
-                axios.put('/memberinfoupdateadmin', UpdatedMemInfo)
-                .then( res => {
-                  alert('Updated successfully!');
-                 }   
-                )
-                .catch(err => {
-                  console.log(err.response);
-                  alert('An error occurred! Try submitting the form again.');
-                });
-              } 
-              postData();
-              console.log(data);
-              console.log(data.id);
-              tableManager.rowEditApi.setEditRowId(null);
-            }}
-          >
-            {SAVE_SVG}
-          </button>
-        </div>
-      )
-    }
+    },
   ];
 };
 

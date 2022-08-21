@@ -49,15 +49,25 @@ function NavBarLogin(props) {
               </Link>
             </Nav.Link>
             <NavDropdown title="Candidate" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="candidateprofile">
-                Candidate Profile
-              </NavDropdown.Item>
-              <NavDropdown.Item href="candidateresume">
+              <Link
+                to="/candidateprofile"
+                style={{ textDecoration: "none", color: "gray" }}
+              >
+                <NavDropdown.Item href="candidateprofile">
+                  Candidate Profile
+                </NavDropdown.Item>
+              </Link>
+              {/* <NavDropdown.Item href="candidateresume">
                 Candidate Resume
-              </NavDropdown.Item>
-              <NavDropdown.Item href="candidatetestscore">
-                Candidate Test Score
-              </NavDropdown.Item>
+              </NavDropdown.Item> */}
+              <Link
+                to="/candidatetestscore"
+                style={{ textDecoration: "none", color: "gray" }}
+              >
+                <NavDropdown.Item href="candidatetestscore">
+                  Candidate Test Score
+                </NavDropdown.Item>
+              </Link>
             </NavDropdown>
             <Nav.Link>
               <Link

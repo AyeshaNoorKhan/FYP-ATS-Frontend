@@ -5,12 +5,9 @@ import { Button, Modal, Form, Row, Col, Container } from "react-bootstrap";
 import "../../../stylesheet/JobDetail.css";
 
 function CandidateProfile(props) {
-  const [show, setShow] = useState(false);
-  const [basePDF, setBasePDF] = useState("");
   const [rowsData, setRowsData] = useState([]);
   const [isLoading, setLoading] = useState(false);
-  var myobj;
-  var link;
+
   async function FetchAPI() {
     const response = await fetch(
       "https://atsbackend.herokuapp.com/api/candinfo/getallcandinfo"
