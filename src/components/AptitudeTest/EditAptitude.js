@@ -310,7 +310,7 @@ export default function EditAptitude() {
                   onClick={updateAptQues}
                 >
                   {" "}
-                  Add Aptitude Question{" "}
+                  Edit Aptitude Question{" "}
                 </Button>
               </div>
             </Form>

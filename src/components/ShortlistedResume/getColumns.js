@@ -1,5 +1,12 @@
-import React from "react";
-import axios from 'axios';
+import React, { useState } from "react";
+import { Alert } from "react-bootstrap";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { IoMail } from "react-icons/io5";
+import { FaFilePdf } from "react-icons/fa";
+import emailjs from "emailjs-com";
+import { init } from "emailjs-com";
+init("user_ctTO3wf4auf2drAPyOGXb");
 
 const EDIT_SVG = (
   <svg
@@ -54,17 +61,18 @@ const styles = {
     height: "100%",
     display: "flex",
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "center",
   },
   editButton: {
-    background: "#f3f3f3",
+    background: "rgb(6, 89, 167)",
     outline: "none",
     cursor: "pointer",
-    padding: 4,
+    padding: 9,
+    marginRight: "1px",
     display: "inline-flex",
     border: "none",
-    borderRadius: "50%",
-    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)"
+    borderRadius: "0%",
+    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
   },
   buttonsCellEditorContainer: {
     height: "100%",
@@ -72,7 +80,7 @@ const styles = {
     display: "inline-flex",
     padding: "0 20px",
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "center",
   },
   cancelButton: {
     background: "#f3f3f3",
@@ -83,7 +91,7 @@ const styles = {
     display: "inline-flex",
     border: "none",
     borderRadius: "50%",
-    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)"
+    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
   },
   saveButton: {
     background: "#f3f3f3",
@@ -93,8 +101,8 @@ const styles = {
     display: "inline-flex",
     border: "none",
     borderRadius: "50%",
-    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)"
-  }
+    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
+  },
 };
 
 const getColumns = ({ setRowsData }) => {
@@ -103,27 +111,48 @@ const getColumns = ({ setRowsData }) => {
       id: "checkbox",
       visible: true,
       pinned: true,
-      width: "54px"
+      width: "54px",
     },
     {
       id: "2",
-      field: "shortlistedresumeid",
+      field: "short_resume_id",
       label: "Shortlisted Resume ID",
     },
     {
       id: "3",
-      field: "candidateresumeid",
-      label: "Candidate Resume ID"
+      field: "cand_id",
+      label: "Candidate ID",
     },
     {
       id: "4",
-      field: "candidateid",
-      label: "Candidate ID"
+      field: "job_id",
+      label: "Job ID",
     },
     {
       id: "5",
-      field: "shortlistedresumerank",
-      label: "Resume Rank"
+      field: "resume_rank",
+      label: "Resume Rank",
+    },
+    {
+      id: "6",
+      field: "resume_url",
+      label: "View Resume",
+      cellRenderer: ({ data }) => {
+        return (
+          <a
+            href={data?.resume_url}
+            target="_blank"
+            style={{ fontSize: "30px", textAlign: "center" }}
+          >
+            <FaFilePdf style={{ color: "black" }} />
+          </a>
+        );
+      },
+    },
+    {
+      id: "7",
+      field: "test_link_status",
+      label: "Test Link",
     },
     {
       id: "buttons",
@@ -137,77 +166,76 @@ const getColumns = ({ setRowsData }) => {
         data,
         column,
         colIndex,
-        rowIndex
-      }) => (
+        rowIndex,
+      }) => {
+        const sendEmail = async () => {
+          const response = await fetch(
+            "https://atsbackend.herokuapp.com/api/candinfo/getcandinfo/" +
+              data.cand_id
+          );
+          const json = await response.json();
+          console.log("rowsData: ", json);
+          var apiData = json.getCand[0];
+          console.log(apiData);
+
+          if (apiData) {
+            let templateParams = {
+              cand_name: apiData.cand_name,
+              cand_email: apiData.cand_email,
+              HR_email: "khan4100339@cloud.neduet.edu.pk",
+            };
+            emailjs
+              .send(
+                "gmail",
+                "template_91vyob6",
+                templateParams,
+                "user_ctTO3wf4auf2drAPyOGXb"
+              )
+              .then(
+                (response) => {
+                  alert(
+                    "Successfully sent test link email to ",
+                    apiData.cand_name
+                  );
+
+                  axios
+                    .put(
+                      "https://atsbackend.herokuapp.com/api/shortlistresume/updateTestLinkStatus/" +
+                        apiData.job_id +
+                        "/" +
+                        apiData.cand_id,
+                      {
+                        test_link_status: "Assigned",
+                      }
+                    )
+                    .then((res) => {
+                      if (res.status == 200) {
+                        alert("Candidate Test Link Status Updated");
+                        window.location.reload();
+                      } else {
+                        alert("Failed to Update Candidate Test Link Status");
+                      }
+                    });
+                },
+                (err) => {
+                  alert("Failed to Send Email Link");
+                }
+              );
+          }
+        };
+        return (
           <div style={styles.buttonsCellContainer}>
             <button
-              title="Edit"
+              title={"Send Test Link "}
               style={styles.editButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                // alert("hello")
-                tableManager.rowEditApi.setEditRowId(data.id);
-              }}
+              onClick={() => sendEmail()}
             >
-              {EDIT_SVG}
+              <IoMail style={{ color: "white" }} />
             </button>
           </div>
-        ),
-      editorCellRenderer: ({
-        tableManager,
-        value,
-        data,
-        column,
-        colIndex,
-        rowIndex,
-        onChange
-      }) => (
-          <div style={styles.buttonsCellEditorContainer}>
-            <button
-              title="Cancel"
-              style={styles.cancelButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                tableManager.rowEditApi.setEditRowId(null);
-              }}
-            >
-              {CANCEL_SVG}
-            </button>
-            <button
-              title="Save"
-              style={styles.saveButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                let rowsClone = [...tableManager.rowsApi.rows];
-                let updatedRowIndex = rowsClone.findIndex(
-                  (r) => r.id === data.id
-                );
-                rowsClone[updatedRowIndex] = data;
-                setRowsData(rowsClone);
-                const postData = () => {
-                  const { _id, id, shortlistedresumeid, candidateresumeid, candidateid, shortlistedresumerank } = data;
-                  var UpdatedMemInfo = { _id, id, shortlistedresumeid, candidateresumeid, candidateid, shortlistedresumerank };
-                  axios.put('/memberinfoupdateadmin', UpdatedMemInfo)
-                    .then(res => {
-                      alert('Updated successfully!');
-                    }
-                    )
-                    .catch(err => {
-                      console.log(err.response);
-                      alert('An error occurred! Try submitting the form again.');
-                    });
-                }
-                postData();
-                console.log(data);
-                console.log(data.id);
-                tableManager.rowEditApi.setEditRowId(null);
-              }}
-            >
-              {SAVE_SVG}
-            </button>
-          </div>
-        )
-    }
+        );
+      },
+    },
   ];
 };
 

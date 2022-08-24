@@ -1,5 +1,7 @@
 import React from "react";
-import axios from 'axios';
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { IoMail } from "react-icons/io5";
 
 const EDIT_SVG = (
   <svg
@@ -54,17 +56,18 @@ const styles = {
     height: "100%",
     display: "flex",
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "center",
   },
   editButton: {
-    background: "#f3f3f3",
+    background: "rgb(6, 89, 167)",
     outline: "none",
     cursor: "pointer",
-    padding: 4,
+    padding: 9,
+    marginRight: "1px",
     display: "inline-flex",
     border: "none",
-    borderRadius: "50%",
-    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)"
+    borderRadius: "0%",
+    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
   },
   buttonsCellEditorContainer: {
     height: "100%",
@@ -72,7 +75,7 @@ const styles = {
     display: "inline-flex",
     padding: "0 20px",
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "center",
   },
   cancelButton: {
     background: "#f3f3f3",
@@ -83,7 +86,7 @@ const styles = {
     display: "inline-flex",
     border: "none",
     borderRadius: "50%",
-    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)"
+    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
   },
   saveButton: {
     background: "#f3f3f3",
@@ -93,8 +96,8 @@ const styles = {
     display: "inline-flex",
     border: "none",
     borderRadius: "50%",
-    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)"
-  }
+    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
+  },
 };
 
 const getColumns = ({ setRowsData }) => {
@@ -103,22 +106,57 @@ const getColumns = ({ setRowsData }) => {
       id: "checkbox",
       visible: true,
       pinned: true,
-      width: "54px"
+      width: "54px",
     },
     {
       id: "2",
-      field: "shortlistedcandidateid",
-      label: "Shortlisted Candidate ID",
+      field: "short_candidate_id",
+      label: "Shortlisted Resume ID",
     },
     {
       id: "3",
-      field: "candidateid",
-      label: "Candidate ID"
+      field: "cand_id",
+      label: "Candidate ID",
     },
     {
       id: "4",
-      field: "candidaterank",
-      label: "Candidate Rank"
+      field: "cand_name",
+      label: "Candidate Name",
+    },
+    {
+      id: "5",
+      field: "cand_email",
+      label: "Candidate Email",
+    },
+    {
+      id: "6",
+      field: "cand_contact",
+      label: "Candidate Contact",
+    },
+    {
+      id: "7",
+      field: "job_id",
+      label: "Job ID",
+    },
+    {
+      id: "8",
+      field: "job_title",
+      label: "Applied for Position",
+    },
+    {
+      id: "9",
+      field: "resume_rank",
+      label: "Resume Rank",
+    },
+    {
+      id: "10",
+      field: "total_score",
+      label: "Aptitude Test Score",
+    },
+    {
+      id: "11",
+      field: "resume_url",
+      label: "View Resume",
     },
     {
       id: "buttons",
@@ -132,77 +170,26 @@ const getColumns = ({ setRowsData }) => {
         data,
         column,
         colIndex,
-        rowIndex
-      }) => (
-          <div style={styles.buttonsCellContainer}>
-            <button
-              title="Edit"
-              style={styles.editButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                // alert("hello")
-                tableManager.rowEditApi.setEditRowId(data.id);
-              }}
-            >
-              {EDIT_SVG}
-            </button>
-          </div>
-        ),
-      editorCellRenderer: ({
-        tableManager,
-        value,
-        data,
-        column,
-        colIndex,
         rowIndex,
-        onChange
       }) => (
-          <div style={styles.buttonsCellEditorContainer}>
-            <button
-              title="Cancel"
-              style={styles.cancelButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                tableManager.rowEditApi.setEditRowId(null);
-              }}
-            >
-              {CANCEL_SVG}
+        <div style={styles.buttonsCellContainer}>
+          <Link
+            to={
+              "/candidatetestscore/graphicalscoreview/" +
+              data.job_id +
+              "/" +
+              data.cand_id
+            }
+            style={{ textDecoration: "none" }}
+          >
+            {" "}
+            <button title={"Send Test Link "} style={styles.editButton}>
+              <IoMail style={{ color: "white" }} />
             </button>
-            <button
-              title="Save"
-              style={styles.saveButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                let rowsClone = [...tableManager.rowsApi.rows];
-                let updatedRowIndex = rowsClone.findIndex(
-                  (r) => r.id === data.id
-                );
-                rowsClone[updatedRowIndex] = data;
-                setRowsData(rowsClone);
-                const postData = () => {
-                  const { _id, id, shortlistedcandidateid, candidateid, candidaterank} = data;
-                  var UpdatedMemInfo = { _id, id, shortlistedcandidateid, candidateid, candidaterank};
-                  axios.put('/memberinfoupdateadmin', UpdatedMemInfo)
-                    .then(res => {
-                      alert('Updated successfully!');
-                    }
-                    )
-                    .catch(err => {
-                      console.log(err.response);
-                      alert('An error occurred! Try submitting the form again.');
-                    });
-                }
-                postData();
-                console.log(data);
-                console.log(data.id);
-                tableManager.rowEditApi.setEditRowId(null);
-              }}
-            >
-              {SAVE_SVG}
-            </button>
-          </div>
-        )
-    }
+          </Link>
+        </div>
+      ),
+    },
   ];
 };
 

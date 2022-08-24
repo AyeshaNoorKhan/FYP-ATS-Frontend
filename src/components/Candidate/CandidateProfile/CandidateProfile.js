@@ -52,23 +52,3 @@ function CandidateProfile(props) {
 }
 
 export default CandidateProfile;
-
-// json.getAllCand.map((res) => {
-//   myobj = [
-//     {
-//       cand_id: res.cand_id,
-//       cand_name: res.cand_name,
-//       cand_email: res.cand_email,
-//       cand_contact: res.cand_contact,
-//       cand_city: res.cand_city,
-//       cand_country: res.cand_country,
-//       cand_highedu: res.cand_highedu,
-//       cand_workexp: res.cand_workexp,
-//       cand_gender: res.cand_gender,
-//       cand_shiftspref: res.cand_shiftspref,
-//       cand_hecverif: res.cand_hecverif,
-//       cand_positionApplied: res.cand_positionApplied,
-//       cand_Resume: res.cand_Resume,
-//     },
-//   ];
-// });

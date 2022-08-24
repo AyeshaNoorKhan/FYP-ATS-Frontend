@@ -9,7 +9,7 @@ const EDIT_SVG = (
     width="16"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g fill="#fff" stroke="#1856bf" transform="translate(2 2)">
+    <g fill="white" stroke="#1856bf" transform="translate(2 2)">
       <path
         d="m8.24920737-.79402796c1.17157287 0 2.12132033.94974747 2.12132033 2.12132034v13.43502882l-2.12132033 3.5355339-2.08147546-3.495689-.03442539-13.47488064c-.00298547-1.16857977.94191541-2.11832105 2.11049518-2.12130651.00180188-.00000461.00360378-.00000691.00540567-.00000691z"
         transform="matrix(.70710678 .70710678 -.70710678 .70710678 8.605553 -3.271644)"
@@ -58,7 +58,7 @@ const styles = {
     alignItems: "center",
   },
   editButton: {
-    background: "#f3f3f3",
+    background: "rgb(6, 89, 167)",
     outline: "none",
     cursor: "pointer",
     padding: 4,
