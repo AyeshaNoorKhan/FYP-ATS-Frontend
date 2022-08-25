@@ -61,12 +61,12 @@ export default function SpecificJobDetail() {
               dangerouslySetInnerHTML={{ __html: apiData.job_experience }}
             />
           </div>
-          <div className="list-right">
+          {/* <div className="list-right">
             <ButtonGroup aria-label="Basic example">
               <Button variant="success">Edit</Button>
               <Button variant="danger">Delete</Button>
             </ButtonGroup>
-          </div>
+          </div> */}
         </ListGroup.Item>
       </ListGroup>
     </div>

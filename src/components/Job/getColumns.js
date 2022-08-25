@@ -1,15 +1,18 @@
 import React from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import AddJobModal from "./AddJobModal";
+import { IoMail } from "react-icons/io5";
+import { IoEyeSharp } from "react-icons/io5";
 
 const EDIT_SVG = (
   <svg
-    height="20"
+    height="16"
     viewBox="0 0 20 20"
     width="16"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g fill="#fff" stroke="#1856bf" transform="translate(2 2)">
+    <g fill="white" stroke="#1856bf" transform="translate(2 2)">
       <path
         d="m8.24920737-.79402796c1.17157287 0 2.12132033.94974747 2.12132033 2.12132034v13.43502882l-2.12132033 3.5355339-2.08147546-3.495689-.03442539-13.47488064c-.00298547-1.16857977.94191541-2.11832105 2.11049518-2.12130651.00180188-.00000461.00360378-.00000691.00540567-.00000691z"
         transform="matrix(.70710678 .70710678 -.70710678 .70710678 8.605553 -3.271644)"
@@ -58,13 +61,14 @@ const styles = {
     alignItems: "center",
   },
   editButton: {
-    background: "#f3f3f3",
+    background: "rgb(6, 89, 167)",
     outline: "none",
     cursor: "pointer",
-    padding: 4,
+    padding: 9,
+    marginRight: "1px",
     display: "inline-flex",
     border: "none",
-    borderRadius: "50%",
+    borderRadius: "0%",
     boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
   },
   buttonsCellEditorContainer: {
@@ -138,73 +142,57 @@ const getColumns = ({ setRowsData }) => {
     },
     {
       id: "8",
-      field: "job_descriptionA",
-      label: "Job Description A",
+      field: "job_description",
+      label: "Job Description",
+      cellRenderer: ({ data }) => {
+        const jobdesc = data.job_description
+          .replace(/<[^>]+>/g, "")
+          .substring(0, 50);
+        return (
+          <div
+            className="post__description"
+            dangerouslySetInnerHTML={{
+              __html: jobdesc,
+            }}
+          />
+        );
+      },
     },
     {
       id: "9",
-      field: "job_descriptionB",
-      label: "Job Description B",
-    },
-    {
-      id: "10",
-      field: "job_descriptionC",
-      label: "Job Description C",
-    },
-    {
-      id: "11",
-      field: "job_descriptionD",
-      label: "Job Description D",
-    },
-    {
-      id: "12",
-      field: "job_descriptionE",
-      label: "Job Description E",
-    },
-    {
-      id: "13",
-      field: "job_descriptionF",
-      label: "Job Description F",
-    },
-    {
-      id: "14",
-      field: "job_descriptionG",
-      label: "Job Description G",
-    },
-    {
-      id: "15",
-      field: "job_descriptionH",
-      label: "Job Description H",
-    },
-    {
-      id: "16",
-      field: "job_qualificationA",
-      label: "Job Qualification A",
-    },
-    {
-      id: "17",
-      field: "job_qualificationB",
-      label: "Job Qualification B",
-    },
-    {
-      id: "18",
-      field: "job_qualificationC",
-      label: "Job Qualification C",
-    },
-    {
-      id: "19",
-      field: "job_qualificationD",
-      label: "Job Qualification D",
-    },
-    {
-      id: "20",
-      field: "job_qualificationE",
-      label: "Job Qualification E",
+      field: "job_qualification",
+      label: "Job Qualification",
+      cellRenderer: ({ data }) => {
+        const jobqua = data.job_qualification
+          .replace(/<[^>]+>/g, "")
+          .substring(0, 50);
+        return (
+          <div
+            className="post__description"
+            dangerouslySetInnerHTML={{
+              __html: jobqua,
+            }}
+          />
+        );
+      },
     },
     {
       id: "21",
       field: "job_experience",
       label: "Job Experience",
+      cellRenderer: ({ data }) => {
+        const jobexp = data.job_experience
+          .replace(/<[^>]+>/g, "")
+          .substring(0, 50);
+        return (
+          <div
+            className="post__description"
+            dangerouslySetInnerHTML={{
+              __html: jobexp,
+            }}
+          />
+        );
+      },
     },
     {
       id: "buttons",
@@ -219,78 +207,68 @@ const getColumns = ({ setRowsData }) => {
         column,
         colIndex,
         rowIndex,
-      }) => (
-        <div style={styles.buttonsCellContainer}>
-          <button
-            title="Edit"
-            style={styles.editButton}
-            onClick={(e) => {
-              e.stopPropagation();
-              // alert("hello")
-              tableManager.rowEditApi.setEditRowId(data.id);
-            }}
-          >
-            {EDIT_SVG}
-          </button>
-        </div>
-      ),
-      editorCellRenderer: ({
-        tableManager,
-        value,
-        data,
-        column,
-        colIndex,
-        rowIndex,
-        onChange,
-      }) =>
-        // navigate("/jobdetails/addnewjob"),
-        window.location.replace("/jobdetails/addnewjob"),
-      // <div style={styles.buttonsCellEditorContainer}>
-      //   <button
-      //     title="Cancel"
-      //     style={styles.cancelButton}
-      //     onClick={(e) => {
-      //       e.stopPropagation();
-      //       tableManager.rowEditApi.setEditRowId(null);
-      //     }}
-      //   >
-      //     {CANCEL_SVG}
-      //   </button>
-      //   <button
-      //     title="Save"
-      //     style={styles.saveButton}
-      //     onClick={(e) => {
-      //       e.stopPropagation();
-      //       let rowsClone = [...tableManager.rowsApi.rows];
-      //       let updatedRowIndex = rowsClone.findIndex(
-      //         (r) => r.id === data.id
-      //       );
-      //       rowsClone[updatedRowIndex] = data;
-      //       setRowsData(rowsClone);
-      //       const postData= ()=>{
-      //         const {_id,job_id,job_code,job_category,job_title,job_location,job_positions,
-      //           job_descriptionA,job_descriptionB,job_descriptionC,job_descriptionD,job_descriptionE,job_descriptionF,job_descriptionG,job_descriptionH,
-      //           job_qualificationA,job_qualificationB,job_qualificationC,job_qualificationD,job_qualificationE,job_experience}=data;
-      //         var UpdatedJob ={_id,job_id,job_code,job_category,job_title,job_location,job_positions,
-      //           job_descriptionA,job_descriptionB,job_descriptionC,job_descriptionD,job_descriptionE,job_descriptionF,job_descriptionG,job_descriptionH,
-      //           job_qualificationA,job_qualificationB,job_qualificationC,job_qualificationD,job_qualificationE,job_experience};
-      //         axios.put('https://atsbackend.herokuapp.com/api/job/updatejob', UpdatedJob)
-      //         .then( res => {
-      //           alert('Updated successfully!');
-      //          }
-      //         )
-      //         .catch(err => {
-      //           console.log(err.response);
-      //           alert('An error occurred! Try submitting the form again.');
-      //         });
-      //       }
-      //       postData();
-      //       tableManager.rowEditApi.setEditRowId(null);
-      //     }}
-      //   >
-      //     {SAVE_SVG}
-      //   </button>
-      // </div>
+      }) => {
+        const sendEmail = async () => {
+          const response = await fetch(
+            "https://atsbackend.herokuapp.com/api/candinfo/getcandinfo/" +
+              data.cand_id
+          );
+          const json = await response.json();
+          console.log("rowsData: ", json);
+          var apiData = json.getCand[0];
+          console.log(apiData);
+
+          if (apiData) {
+            axios
+              .put(
+                "https://atsbackend.herokuapp.com/api/shortlistresume/updateTestLinkStatus/" +
+                  apiData.job_id +
+                  "/" +
+                  apiData.cand_id,
+                {
+                  test_link_status: "Assigned",
+                }
+              )
+              .then((res) => {
+                if (res.status == 200) {
+                  alert("Candidate Test Link Status Updated");
+                  window.location.reload();
+                } else {
+                  alert("Failed to Update Candidate Test Link Status");
+                }
+              });
+          }
+        };
+        return (
+          <div style={styles.buttonsCellContainer}>
+            <Link
+              to={"/jobdetails/updatejob/" + data.job_id}
+              style={{ textDecoration: "none" }}
+            >
+              <button
+                title={"Edit Job"}
+                style={styles.editButton}
+                onClick={() => sendEmail()}
+              >
+                {EDIT_SVG}
+              </button>
+            </Link>
+
+            <Link
+              to={"/jobdetails/getjob/" + data.job_id}
+              style={{ textDecoration: "none" }}
+            >
+              <button
+                title={"View Job"}
+                style={styles.editButton}
+                onClick={() => sendEmail()}
+              >
+                <IoEyeSharp style={{ color: "white" }} />
+              </button>
+            </Link>
+          </div>
+        );
+      },
     },
   ];
 };

@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { IoMail } from "react-icons/io5";
+import { AiOutlineFileSearch } from "react-icons/ai";
+import emailjs from "emailjs-com";
+import { init } from "emailjs-com";
+init("user_ctTO3wf4auf2drAPyOGXb");
 
 const EDIT_SVG = (
   <svg
@@ -110,7 +113,7 @@ const getColumns = ({ setRowsData }) => {
     },
     {
       id: "2",
-      field: "short_candidate_id",
+      field: "shortlisted_cand_Id",
       label: "Shortlisted Resume ID",
     },
     {
@@ -120,43 +123,23 @@ const getColumns = ({ setRowsData }) => {
     },
     {
       id: "4",
-      field: "cand_name",
-      label: "Candidate Name",
-    },
-    {
-      id: "5",
-      field: "cand_email",
-      label: "Candidate Email",
-    },
-    {
-      id: "6",
-      field: "cand_contact",
-      label: "Candidate Contact",
-    },
-    {
-      id: "7",
       field: "job_id",
       label: "Job ID",
     },
     {
-      id: "8",
-      field: "job_title",
-      label: "Applied for Position",
+      id: "5",
+      field: "total_score",
+      label: "Aptitude Score",
     },
     {
-      id: "9",
+      id: "6",
       field: "resume_rank",
       label: "Resume Rank",
     },
     {
-      id: "10",
-      field: "total_score",
-      label: "Aptitude Test Score",
-    },
-    {
-      id: "11",
-      field: "resume_url",
-      label: "View Resume",
+      id: "7",
+      field: "final_interview_link_status",
+      label: "Onsite Interview",
     },
     {
       id: "buttons",
@@ -171,24 +154,143 @@ const getColumns = ({ setRowsData }) => {
         column,
         colIndex,
         rowIndex,
-      }) => (
-        <div style={styles.buttonsCellContainer}>
-          <Link
-            to={
-              "/candidatetestscore/graphicalscoreview/" +
-              data.job_id +
-              "/" +
+      }) => {
+        const updateFinalInterviewStatus = (jobId, candId, emailStatus) => {
+          axios
+            .put(
+              "https://atsbackend.herokuapp.com/api/shortlistcandidate/updateFinalInterviewStatus/" +
+                jobId +
+                "/" +
+                candId,
+              {
+                final_interview_link_status: emailStatus,
+              }
+            )
+            .then((res) => {
+              if (res.status == 200) {
+                alert("Candidate Final Interview Status Updated");
+                window.location.reload();
+              } else {
+                alert("Failed to Update Final Interview Status");
+              }
+            });
+        };
+        const sendRejectionEmail = async () => {
+          const response = await fetch(
+            "https://atsbackend.herokuapp.com/api/candinfo/getcandinfo/" +
               data.cand_id
-            }
-            style={{ textDecoration: "none" }}
-          >
-            {" "}
-            <button title={"Send Test Link "} style={styles.editButton}>
-              <IoMail style={{ color: "white" }} />
+          );
+          const json = await response.json();
+          var apiData = json.getCand[0];
+
+          if (apiData) {
+            let templateParams = {
+              cand_name: apiData.cand_name,
+              cand_email: apiData.cand_email,
+              HR_email: "khan4100339@cloud.neduet.edu.pk",
+              Text_one:
+                "but, you have been unsuccessful in moving on to the next stage of recruiting.",
+              Text_two:
+                "We will keep your resume on file and may contact you about future opportunities that fit your qualifications, skills, and experience. We strongly encourage you to pursue other possibilities with us in the future.",
+              Text_three:
+                "We wish you the best of luck with your career search.",
+            };
+            emailjs
+              .send(
+                "gmail",
+                "template_18xl4pn",
+                templateParams,
+                "user_ctTO3wf4auf2drAPyOGXb"
+              )
+              .then(
+                (response) => {
+                  alert(
+                    "Successfully Sent Rejection Interview Email to ",
+                    apiData.cand_name
+                  );
+                  updateFinalInterviewStatus(
+                    apiData.job_id,
+                    apiData.cand_id,
+                    "Rejected"
+                  );
+                },
+                (err) => {
+                  alert("Failed to Send Rejection Interview Email");
+                }
+              );
+          }
+        };
+        const sendSelectionEmail = async () => {
+          const response = await fetch(
+            "https://atsbackend.herokuapp.com/api/candinfo/getcandinfo/" +
+              data.cand_id
+          );
+          const json = await response.json();
+          var apiData = json.getCand[0];
+
+          if (apiData) {
+            let templateParams = {
+              cand_name: apiData.cand_name,
+              cand_email: apiData.cand_email,
+              HR_email: "khan4100339@cloud.neduet.edu.pk",
+              Text_one:
+                "and we are glad to inform you that you have been successful in moving on to the next stage of recruiting.",
+              Text_two:
+                "We will be going to contact you shortly for further recruitment process.",
+              Text_three:
+                "We wish you the best of luck for further recruitment process and looking forward to contact with you.",
+            };
+            emailjs
+              .send(
+                "gmail",
+                "template_18xl4pn",
+                templateParams,
+                "user_ctTO3wf4auf2drAPyOGXb"
+              )
+              .then(
+                (response) => {
+                  alert(
+                    "Successfully Sent Selection Interview Email to ",
+                    apiData.cand_name
+                  );
+                  updateFinalInterviewStatus(
+                    apiData.job_id,
+                    apiData.cand_id,
+                    "Selected"
+                  );
+                },
+                (err) => {
+                  alert("Failed to Send Selection Interview Email");
+                }
+              );
+          }
+        };
+        return (
+          <div style={styles.buttonsCellContainer}>
+            <button
+              title={"Interview Selection Email"}
+              style={styles.editButton}
+              onClick={() => sendSelectionEmail()}
+            >
+              <IoMail style={{ color: "rgb(144,238,144)" }} />
             </button>
-          </Link>
-        </div>
-      ),
+            <button
+              title={"View Candidate Information"}
+              style={styles.editButton}
+              // onClick={() => sendEmail()}
+            >
+              <AiOutlineFileSearch style={{ color: "white" }} />
+            </button>
+            <button
+              title={"Interview Rejection Email"}
+              style={styles.editButton}
+              onClick={() => sendRejectionEmail()}
+            >
+              <IoMail style={{ color: "rgb(254,39,18)" }} />
+            </button>
+          </div>
+        );
+      },
     },
   ];
 };

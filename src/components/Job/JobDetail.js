@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button, ButtonGroup, Modal } from "react-bootstrap";
 import axios from "axios";
+import GridTable from "@nadavshaar/react-grid-table";
+import getColumns from "./getColumns.js";
 import { Link } from "react-router-dom";
 import "../../stylesheet/JobDetail.css";
-import "../../stylesheet/Modal.css"
+import "../../stylesheet/Modal.css";
 import ListGroup from "react-bootstrap/ListGroup";
 
 function JobDetail(props) {
@@ -31,9 +33,8 @@ function JobDetail(props) {
     setId(id);
     console.log(id);
     setShowConfirm(true);
-  }
+  };
   const handleConfirmClose = () => setShowConfirm(false);
-
 
   const deleteSpecificJob = (jobId) => {
     handleConfirmClose();
@@ -41,7 +42,7 @@ function JobDetail(props) {
       axios
         .delete(`https://atsbackend.herokuapp.com/api/job/deletejob/` + jobId)
         .then((res) => {
-          console.log(res)
+          console.log(res);
           if (res.status == 200) {
             handleSuccessShow();
           } else {
@@ -90,8 +91,16 @@ function JobDetail(props) {
       </Link>
 
       <p></p>
-
-      {/* <GridTable
+      <h5
+        style={{
+          backgroundColor: "rgb(6, 89, 167)",
+          color: "white",
+          padding: "7px",
+        }}
+      >
+        JOBS
+      </h5>
+      <GridTable
         columns={getColumns({ setRowsData })}
         rows={rowsData}
         isLoading={isLoading}
@@ -100,8 +109,8 @@ function JobDetail(props) {
           tableManager.rowSelectionApi.getIsRowSelectable(data.id) &&
           tableManager.rowSelectionApi.toggleRowSelection(data.id)
         }
-      /> */}
-      <ListGroup>
+      />
+      {/* <ListGroup>
         <h5
           style={{
             backgroundColor: "rgb(6, 89, 167)",
@@ -172,9 +181,17 @@ function JobDetail(props) {
             </div>
           </ListGroup.Item>
         ))}
-      </ListGroup>
+      </ListGroup> */}
 
-      <Modal contentClassName="modalSuccess" style={{ color: "#0f5132" }} show={showSuccess} onHide={handleSuccessClose} backdrop="static" keyboard={false} centered>
+      <Modal
+        contentClassName="modalSuccess"
+        style={{ color: "#0f5132" }}
+        show={showSuccess}
+        onHide={handleSuccessClose}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Success</Modal.Title>
         </Modal.Header>
@@ -186,7 +203,14 @@ function JobDetail(props) {
         </Modal.Footer>
       </Modal>
 
-      <Modal contentClassName="modalFailure" show={showFailure} onHide={handleFailureClose} backdrop="static" keyboard={false} centered>
+      <Modal
+        contentClassName="modalFailure"
+        show={showFailure}
+        onHide={handleFailureClose}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Failure</Modal.Title>
         </Modal.Header>
@@ -198,7 +222,14 @@ function JobDetail(props) {
         </Modal.Footer>
       </Modal>
 
-      <Modal contentClassName="modalFailure" show={showError} onHide={handleErrorClose} backdrop="static" keyboard={false} centered>
+      <Modal
+        contentClassName="modalFailure"
+        show={showError}
+        onHide={handleErrorClose}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Error</Modal.Title>
         </Modal.Header>
@@ -210,12 +241,21 @@ function JobDetail(props) {
         </Modal.Footer>
       </Modal>
 
-      <Modal contentClassName="modalConfirm" show={showConfirm} onHide={handleConfirmClose} backdrop="static" keyboard={false} centered>
+      <Modal
+        contentClassName="modalConfirm"
+        show={showConfirm}
+        onHide={handleConfirmClose}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Warning</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete this job?</Modal.Body>
-        <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
+        <Modal.Footer
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
           <Button variant="secondary" onClick={handleConfirmClose}>
             Cancel
           </Button>

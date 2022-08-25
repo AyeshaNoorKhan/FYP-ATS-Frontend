@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Alert } from "react-bootstrap";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { IoMail } from "react-icons/io5";
 import { FaFilePdf } from "react-icons/fa";
 import emailjs from "emailjs-com";
