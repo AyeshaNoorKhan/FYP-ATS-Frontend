@@ -92,14 +92,15 @@ const styles = {
     boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
   },
   saveButton: {
-    background: "#f3f3f3",
+    background: "rgb(6, 89, 167)",
     outline: "none",
     cursor: "pointer",
-    padding: 2,
+    padding: 4,
     display: "inline-flex",
     border: "none",
-    borderRadius: "50%",
-    boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
+    borderRadius: "0%",
+    margin: "1rem",
+    // boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
   },
 };
 
@@ -120,6 +121,19 @@ const getColumns = ({ setRowsData }) => {
       id: "3",
       field: "cand_id",
       label: "Candidate ID",
+      cellRenderer: ({ data }) => {
+        return (
+          <div>
+            <button
+              style={styles.saveButton}
+              title={"View Candidate Information"}
+            >
+              <AiOutlineFileSearch style={{ color: "white" }} />
+            </button>{" "}
+            {data.cand_id}{" "}
+          </div>
+        );
+      },
     },
     {
       id: "4",
@@ -274,13 +288,13 @@ const getColumns = ({ setRowsData }) => {
             >
               <IoMail style={{ color: "rgb(144,238,144)" }} />
             </button>
-            <button
+            {/* <button
               title={"View Candidate Information"}
               style={styles.editButton}
               // onClick={() => sendEmail()}
             >
               <AiOutlineFileSearch style={{ color: "white" }} />
-            </button>
+            </button> */}
             <button
               title={"Interview Rejection Email"}
               style={styles.editButton}

@@ -28,7 +28,7 @@ function AddJobModal(props) {
     });
   };
   const [aptInfo, setaptInfo] = useState({
-    aptTest_id: "",
+    // aptTest_id: "",
     aptTest_category: "",
     aptTest_question: "",
     aptTest_optionA: "",
@@ -70,7 +70,7 @@ function AddJobModal(props) {
       alert("working");
       axios
         .post(`https://atsbackend.herokuapp.com/api/aptTest/addapttest`, {
-          aptTest_id: aptInfo.aptTest_id,
+          // aptTest_id: aptInfo.aptTest_id,
           aptTest_category: aptInfo.aptTest_category,
           aptTest_question: draftToHtml(
             convertToRaw(quesEditorState.getCurrentContent())
@@ -111,17 +111,6 @@ function AddJobModal(props) {
               </h5>
               <Row className="mb-3">
                 <Form.Group as={Col}>
-                  <Form.Text className="text-muted">Aptitude Test ID</Form.Text>
-                  <Form.Control
-                    size="sm"
-                    type="text"
-                    name="aptTest_id" //change accordingly
-                    value={aptInfo.aptTest_id} //change a/c to quesInfo
-                    onChange={onChangeValue}
-                    placeholder=""
-                  />
-                </Form.Group>
-                <Form.Group as={Col}>
                   <Form.Text className="text-muted">
                     Select Aptitude Test Category
                   </Form.Text>
@@ -133,6 +122,28 @@ function AddJobModal(props) {
                     onChange={onChangeValue}
                     placeholder=""
                   />
+                  {/* <Form.Text className="text-muted">Aptitude Test ID</Form.Text>
+                  <Form.Control
+                    size="sm"
+                    type="text"
+                    name="aptTest_id" //change accordingly
+                    value={aptInfo.aptTest_id} //change a/c to quesInfo
+                    onChange={onChangeValue}
+                    placeholder=""
+                  /> */}
+                </Form.Group>
+                <Form.Group as={Col}>
+                  {/* <Form.Text className="text-muted">
+                    Select Aptitude Test Category
+                  </Form.Text>
+                  <Form.Control
+                    size="sm"
+                    type="text"
+                    name="aptTest_category" //change accordingly
+                    value={aptInfo.aptTest_category} //change a/c to quesInfo
+                    onChange={onChangeValue}
+                    placeholder=""
+                  /> */}
                 </Form.Group>
               </Row>
 

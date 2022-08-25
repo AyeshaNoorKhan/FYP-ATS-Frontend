@@ -2,6 +2,18 @@
 {
     margin-top: 3rem;
 }
+
+.loader
+{
+    color: rgb(167, 168, 169);
+    width: 100px;
+    height: 100px;
+    /* Center vertically and horizontally */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -25px 0 0 -25px; 
+}
 .job-detail-list
 {
     margin-top: 4rem;

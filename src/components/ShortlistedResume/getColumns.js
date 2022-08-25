@@ -137,13 +137,23 @@ const getColumns = ({ setRowsData }) => {
       label: "View Resume",
       cellRenderer: ({ data }) => {
         return (
-          <a
-            href={data?.resume_url}
-            target="_blank"
-            style={{ fontSize: "30px", textAlign: "center" }}
+          <div
+            className="rgt-cell-inner"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              overflow: "hidden",
+              marginLeft: "5rem",
+            }}
           >
-            <FaFilePdf style={{ color: "black" }} />
-          </a>
+            <a
+              href={data?.resume_url}
+              target="_blank"
+              style={{ fontSize: "30px", textAlign: "center" }}
+            >
+              <FaFilePdf style={{ color: "rgb(6, 89, 167)" }} />
+            </a>
+          </div>
         );
       },
     },

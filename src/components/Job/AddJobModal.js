@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { Form, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import "../../stylesheet/JobDetail.css";
-import "../../stylesheet/Modal.css"
+import "../../stylesheet/Modal.css";
 import {
   EditorState,
   convertToRaw,
@@ -32,7 +32,7 @@ function AddJobModal(props) {
   );
 
   const [jobInfo, setjobInfo] = useState({
-    job_id: "",
+    // job_id: "",
     job_code: "",
     job_category: "",
     job_title: "",
@@ -87,7 +87,7 @@ function AddJobModal(props) {
       //   }
       axios
         .post(`https://atsbackend.herokuapp.com/api/job/addjob`, {
-          job_id: jobInfo.job_id,
+          // job_id: jobInfo.job_id,
           job_code: jobInfo.job_code,
           job_category: jobInfo.job_category,
           job_title: jobInfo.job_title,
@@ -133,17 +133,6 @@ function AddJobModal(props) {
               </h5>
               <Row className="mb-3">
                 <Form.Group as={Col}>
-                  <Form.Text className="text-muted">Job ID</Form.Text>
-                  <Form.Control
-                    size="sm"
-                    type="text"
-                    name="job_id"
-                    value={jobInfo.job_id}
-                    onChange={onChangeValue}
-                    placeholder=""
-                  />
-                </Form.Group>
-                <Form.Group as={Col}>
                   <Form.Text className="text-muted">Job Code</Form.Text>
                   <Form.Control
                     size="sm"
@@ -153,6 +142,26 @@ function AddJobModal(props) {
                     onChange={onChangeValue}
                     placeholder=""
                   />
+                  {/* <Form.Text className="text-muted">Job ID</Form.Text>
+                  <Form.Control
+                    size="sm"
+                    type="text"
+                    name="job_id"
+                    value={jobInfo.job_id}
+                    onChange={onChangeValue}
+                    placeholder=""
+                  /> */}
+                </Form.Group>
+                <Form.Group as={Col}>
+                  {/* <Form.Text className="text-muted">Job Code</Form.Text>
+                  <Form.Control
+                    size="sm"
+                    type="text"
+                    name="job_code"
+                    value={jobInfo.job_code}
+                    onChange={onChangeValue}
+                    placeholder=""
+                  /> */}
                 </Form.Group>
               </Row>
               <Row className="mb-3">
@@ -314,13 +323,20 @@ function AddJobModal(props) {
               {/* <Button onClick={handleSuccessShow}>Success</Button>
               <Button onClick={handleFailureShow}>Failure</Button> */}
               {/* temp */}
-
             </Form>
           </div>
         </div>
       </div>
 
-      <Modal contentClassName="modalSuccess" style={{ color: "#0f5132" }} show={showSuccess} onHide={handleSuccessClose} backdrop="static" keyboard={false} centered>
+      <Modal
+        contentClassName="modalSuccess"
+        style={{ color: "#0f5132" }}
+        show={showSuccess}
+        onHide={handleSuccessClose}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Success</Modal.Title>
         </Modal.Header>
@@ -332,7 +348,14 @@ function AddJobModal(props) {
         </Modal.Footer>
       </Modal>
 
-      <Modal contentClassName="modalFailure" show={showFailure} onHide={handleFailureClose} backdrop="static" keyboard={false} centered>
+      <Modal
+        contentClassName="modalFailure"
+        show={showFailure}
+        onHide={handleFailureClose}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Failure</Modal.Title>
         </Modal.Header>
@@ -344,7 +367,14 @@ function AddJobModal(props) {
         </Modal.Footer>
       </Modal>
 
-      <Modal contentClassName="modalFailure" show={showError} onHide={handleErrorClose} backdrop="static" keyboard={false} centered>
+      <Modal
+        contentClassName="modalFailure"
+        show={showError}
+        onHide={handleErrorClose}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Error</Modal.Title>
         </Modal.Header>
