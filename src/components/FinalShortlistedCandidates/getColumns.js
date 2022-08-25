@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { IoMail } from "react-icons/io5";
-import { AiOutlineFileSearch } from "react-icons/ai";
+import { RiUserSearchFill } from "react-icons/ri";
 import emailjs from "emailjs-com";
 import { init } from "emailjs-com";
 init("user_ctTO3wf4auf2drAPyOGXb");
@@ -128,7 +128,7 @@ const getColumns = ({ setRowsData }) => {
               style={styles.saveButton}
               title={"View Candidate Information"}
             >
-              <AiOutlineFileSearch style={{ color: "white" }} />
+              <RiUserSearchFill style={{ color: "white" }} />
             </button>{" "}
             {data.cand_id}{" "}
           </div>
