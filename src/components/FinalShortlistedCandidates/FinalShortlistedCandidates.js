@@ -74,13 +74,8 @@ function FinalShortlistedCandidates(props) {
     );
 
     const json = await response.json();
-    // setLoading(true);
-
-    // setTimeout(() => {
     setCandInfo(json.getCand[0]);
     console.log("json.getCand[0]", json.getCand[0]);
-    // setLoading(false);
-    // }, 3000);
   }
   const handleClose = () => setShow(false);
   const handleShow = (candID) => {

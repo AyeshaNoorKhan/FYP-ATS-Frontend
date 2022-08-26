@@ -4,6 +4,7 @@ import { IoMail } from "react-icons/io5";
 import { FaFilePdf } from "react-icons/fa";
 import emailjs from "emailjs-com";
 import { init } from "emailjs-com";
+
 init("user_ctTO3wf4auf2drAPyOGXb");
 
 const EDIT_SVG = (
@@ -130,6 +131,16 @@ const getColumns = ({ setRowsData }) => {
       id: "5",
       field: "resume_rank",
       label: "Resume Rank",
+    },
+    {
+      id: "6",
+      field: "cand_positionApplied",
+      label: "Applied for Position",
+    },
+    {
+      id: "7",
+      field: "resume_matched_job",
+      label: "Resume Matched to Job",
     },
     {
       id: "6",

@@ -21,7 +21,9 @@ function RoutesNav(props) {
   return (
     <div className="routs">
       <Routes>
-        <Route path="/" element={<Login />} />
+        {/* <Route path="/" element={<Login />} /> */}
+        <Route path="/" element={<Home />} />
+
         <Route path="/home" element={<Home />} />
         <Route path="/jobdetails" element={<JobDetail />} />
         <Route path="/jobdetails/addnewjob" element={<AddJobModal />} />

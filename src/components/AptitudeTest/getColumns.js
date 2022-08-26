@@ -64,7 +64,7 @@ const styles = {
     padding: 4,
     display: "inline-flex",
     border: "none",
-    borderRadius: "50%",
+    borderRadius: "0%",
     boxShadow: "1px 1px 2px 0px rgb(0 0 0 / .3)",
   },
   buttonsCellEditorContainer: {
@@ -120,6 +120,19 @@ const getColumns = ({ setRowsData }) => {
       id: "4",
       field: "aptTest_question",
       label: "Question",
+      cellRenderer: ({ data }) => {
+        const jobexp = data.aptTest_question
+          .replace(/<[^>]+>/g, "")
+          .substring(0, 50);
+        return (
+          <div
+            className="post__description"
+            dangerouslySetInnerHTML={{
+              __html: jobexp,
+            }}
+          />
+        );
+      },
     },
     {
       id: "5",
