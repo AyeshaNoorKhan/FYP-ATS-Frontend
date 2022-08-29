@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import Job from "./Job";
 import SearchSort from "./SearchSort";
+import { Spinner } from "react-bootstrap";
+import "../../App.css";
 
 // function JobList() {
 function JobList() {
@@ -24,7 +26,11 @@ function JobList() {
       });
   }, []);
   if (isLoading) {
-    return "Loading";
+    return (
+      <div className="job-detail-list">
+        <Spinner animation="border" className="loader" />
+      </div>
+    );
   } else {
     return (
       <div className="joblist">
