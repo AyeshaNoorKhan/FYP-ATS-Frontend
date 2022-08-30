@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col, Container, Card } from "react-bootstrap";
 import JobList from "./JobList";
-import SearchSort from "./SearchSort";
 
 function JobListingPage() {
   return (

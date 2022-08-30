@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card, Form, Button, Modal } from "react-bootstrap";
 import Axios from "axios";
 import "./Modal.css";
+import { Spinner } from "react-bootstrap";
+import "../../App.css";
 
 function Apply({ positionApplied, jobIDparam }) {
   const [formData, setFormData] = useState({
@@ -27,7 +29,7 @@ function Apply({ positionApplied, jobIDparam }) {
         ? target.checked
         : target.type === "file"
         ? target.files[0]
-        : target.type == "number"
+        : target.type === "number"
         ? parseInt(target.value)
         : target.value;
 
@@ -67,6 +69,7 @@ function Apply({ positionApplied, jobIDparam }) {
     }
     event.preventDefault();
     try {
+      handleLoadShow();
       Axios.post(
         "https://atsbackend.herokuapp.com/api/candinfo/addcandinfo",
         formData,
@@ -77,6 +80,7 @@ function Apply({ positionApplied, jobIDparam }) {
         }
       ).then((response) => {
         if (response.status == 200) {
+          handleLoadClose();
           handleSuccessShow();
           event.target.reset();
         } else {
@@ -100,6 +104,10 @@ function Apply({ positionApplied, jobIDparam }) {
   const [showError, setShowError] = useState(false);
   const handleErrorShow = () => setShowError(true);
   const handleErrorClose = () => setShowError(false);
+
+  const [showLoad, setShowLoad] = useState(false);
+  const handleLoadShow = () => setShowLoad(true);
+  const handleLoadClose = () => setShowLoad(false);
 
   const [modalError, setModalError] = useState("");
 
@@ -349,7 +357,9 @@ function Apply({ positionApplied, jobIDparam }) {
         <Modal.Header closeButton>
           <Modal.Title>Success</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Thank You for Applying.</Modal.Body>
+        <Modal.Body>
+          Thank You for Applying.Your application has been submitted
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="success" onClick={handleSuccessClose}>
             Close
@@ -392,6 +402,27 @@ function Apply({ positionApplied, jobIDparam }) {
           <Button variant="danger" onClick={handleErrorClose}>
             Close
           </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal
+        // contentClassName="modalFailure"
+        show={showLoad}
+        onHide={handleLoadClose}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Submitting Your Application</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Spinner animation="border" className="loader" />
+        </Modal.Body>
+        <Modal.Footer>
+          {/* <Button variant="danger" onClick={handleLoadClose}>
+            Close
+          </Button> */}
         </Modal.Footer>
       </Modal>
     </div>
