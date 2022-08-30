@@ -417,7 +417,11 @@ function Apply({ positionApplied, jobIDparam }) {
           <Modal.Title>Submitting Your Application</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Spinner animation="border" className="loader" />
+          <Spinner
+            animation="border"
+            className="loader"
+            style={{ padding: "1rem" }}
+          />
         </Modal.Body>
         <Modal.Footer>
           {/* <Button variant="danger" onClick={handleLoadClose}>
